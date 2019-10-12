@@ -26,7 +26,12 @@ import javax.swing.event.UndoableEditEvent;
 import javax.swing.event.UndoableEditListener;
 import javax.swing.undo.UndoManager;
 
-///////////////////////////////////////////////////////////////////////// Editor de Texto
+
+
+/**
+ * Classe do editor de texto
+ * 
+ */
 public class EditorTexto extends JFrame {
 
     private JTextArea    _editArea;
@@ -41,11 +46,20 @@ public class EditorTexto extends JFrame {
     private RedoAction redoAction = new RedoAction();
 
   /////////////////////////////////////////////////////////////////////////// main
+
+    /**
+     *
+     * @param args
+     */
     public static void main(String[] args) {
         new EditorTexto();
     }
 
     /////////////////////////////////////////////////////////////////////////// Consrutor
+
+    /**
+     * Método construtor
+     */
     public EditorTexto() {
         //cria uma interface bonitinha com scroll
         _editArea = new JTextArea(15, 80);
@@ -84,15 +98,25 @@ public class EditorTexto extends JFrame {
         setVisible(true);
     }
 
-    //////////////////////////////////////////////////acoes inerentes a classe
+    /**
+     * acoes inerentes a classe
+     * 
+     */
     class OpenAction extends AbstractAction {
-        //============================================= metodo construtor
+        /**
+         * metodo construtor
+         */
+        
         public OpenAction() {
             super("Abrir");
             putValue(MNEMONIC_KEY, new Integer('O'));
         }
 
-        //========================================= quando uma aÃ§ao Ã© realizada
+        /**
+         * quando uma aÃ§ao Ã© realizada
+         * 
+         */
+        
         @Override 
         public void actionPerformed(ActionEvent e) {
             int retval = _fileChooser.showOpenDialog(EditorTexto.this);
@@ -109,7 +133,9 @@ public class EditorTexto extends JFrame {
         }
     }
 
-    ////////////////////////////////////////////////////
+    /**
+     * Salva o texto
+     */
     class SaveAction extends AbstractAction {
 
         SaveAction() {
@@ -150,7 +176,10 @@ public class EditorTexto extends JFrame {
         }
     }
 
-//////////////////////////////////////////////////////////////////////////
+/**
+ * 
+ * 
+ */
 
     class UndoListener implements UndoableEditListener {
       @Override
@@ -161,7 +190,10 @@ public class EditorTexto extends JFrame {
       }
     }
 
-  /////////////////////////////////////////////////////////////////////////
+  /**
+   * Desfaz uma ação
+   * 
+   */
     class UndoAction extends AbstractAction {
       public UndoAction() {
         this.putValue(Action.NAME, "Desfazer");
@@ -187,7 +219,7 @@ public class EditorTexto extends JFrame {
 
     class RedoAction extends AbstractAction {
       public RedoAction() {
-        this.putValue(Action.NAME, undoManager.getRedoPresentationName());
+        this.putValue(Action.NAME, "Refazer");
         this.setEnabled(false);
       }
 
