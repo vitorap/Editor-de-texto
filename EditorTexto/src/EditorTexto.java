@@ -7,7 +7,6 @@
 
 
 import java.awt.*;
-import java.awt.event.*;
 import javax.swing.*;
 import java.io.*;
 
@@ -21,7 +20,6 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JScrollPane;
-import javax.swing.JTextPane;
 import javax.swing.event.UndoableEditEvent;
 import javax.swing.event.UndoableEditListener;
 import javax.swing.undo.UndoManager;
@@ -29,7 +27,7 @@ import javax.swing.undo.UndoManager;
 
 
 /**
- * Classe do editor de texto
+ * Classe principal do editor de texto
  * 
  */
 public class EditorTexto extends JFrame {
@@ -48,7 +46,7 @@ public class EditorTexto extends JFrame {
   /////////////////////////////////////////////////////////////////////////// main
 
     /**
-     *
+     * aqui se carrega o texto a ser editado (no caso de nao ser um texto novo)
      * @param args
      */
     public static void main(String[] args) {
@@ -58,7 +56,9 @@ public class EditorTexto extends JFrame {
     /////////////////////////////////////////////////////////////////////////// Consrutor
 
     /**
-     * Método construtor
+     * 
+     * 
+     * Método construtor, aqui criamos uma interface, painel, e a barra de menu
      */
     public EditorTexto() {
         //cria uma interface bonitinha com scroll
@@ -73,13 +73,13 @@ public class EditorTexto extends JFrame {
         content.setLayout(new BorderLayout());
         content.add(scrollingText, BorderLayout.CENTER);
         
-        CutCopyPastActionSupport support = new CutCopyPastActionSupport();
-        support.setPopup(_editArea);
+        AuxiliarAtalhos auxiliar = new AuxiliarAtalhos();
+        auxiliar.setPopup(_editArea);
         
         //criando a barra de menu
         JMenuBar menuBar = new JMenuBar();
         JMenu fileMenu = menuBar.add(new JMenu("Arquivo"));
-        JMenu editorMenu = menuBar.add(new JMenu("Editar"));
+        JMenu editorMenu = menuBar.add(new JMenu("Editar Entrega 1"));
         fileMenu.setMnemonic('F');
         fileMenu.add(_openAction);
         fileMenu.add(_saveAction);
@@ -88,7 +88,7 @@ public class EditorTexto extends JFrame {
         editorMenu.setMnemonic('E');
         editorMenu.add(undoAction);
         editorMenu.add(redoAction);
-        
+        menuBar.add(auxiliar.getMenu());
         //preenchendo a janela com conteudo
         setContentPane(content);
         setJMenuBar(menuBar);
@@ -102,7 +102,9 @@ public class EditorTexto extends JFrame {
     }
 
     /**
-     * acoes inerentes a classe
+     * 
+     * Açoes referentes a entrega 1: Abrir arquivos
+     * Essa funçao abre um arquivo de texto
      * 
      */
     class OpenAction extends AbstractAction {
@@ -116,7 +118,7 @@ public class EditorTexto extends JFrame {
         }
 
         /**
-         * quando uma aÃ§ao Ã© realizada
+         * quando uma açao é realizada
          * 
          */
         
@@ -137,7 +139,10 @@ public class EditorTexto extends JFrame {
     }
 
     /**
-     * Salva o texto
+     * 
+     * Açoes referentes a entrega 1: Salvar o texto
+     * Essa funçao salva o texto quando a acao de salvar o texto é invocada
+     * 
      */
     class SaveAction extends AbstractAction {
 
@@ -163,12 +168,17 @@ public class EditorTexto extends JFrame {
         }
     }
 
-
+      /**
+     * 
+     * Açoes referentes a entrega 1: Sair do programa
+     * Essa funçao sai do programa quando a acao de sair invocada
+     * 
+     */
     class ExitAction extends AbstractAction {
 
 
         public ExitAction() {
-            super("Encerrar sessÃ£o");
+            super("Encerrar");
             putValue(MNEMONIC_KEY, new Integer('X'));
         }
 
@@ -184,6 +194,10 @@ public class EditorTexto extends JFrame {
  * 
  */
 
+   /**
+   *  Essa funcao fica observando oque acontece, para saber para qual estado mudar quando necessitar desfazer ou refazer
+   * 
+   */
     class UndoListener implements UndoableEditListener {
       @Override
       public void undoableEditHappened(UndoableEditEvent e) {
@@ -194,7 +208,7 @@ public class EditorTexto extends JFrame {
     }
 
   /**
-   * Desfaz uma ação
+   *  Essa funcao Desfaz uma ação
    * 
    */
     class UndoAction extends AbstractAction {
@@ -220,6 +234,10 @@ public class EditorTexto extends JFrame {
 
 ////////////////////////////////////////////////////////////////////////
 
+   /**
+   *  Essa funcao Refaz uma ação
+   * 
+   */
     class RedoAction extends AbstractAction {
       public RedoAction() {
         this.putValue(Action.NAME, "Refazer");

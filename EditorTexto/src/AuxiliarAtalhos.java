@@ -5,17 +5,26 @@ import javax.swing.text.TextAction;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 
-
-public class CutCopyPastActionSupport {
+/**
+ * Classe auxiliar para atalhos de copiar, colar e cortar.
+ * Essa classe gera poupups ao clicar com o botao direito do mouse, podendo selecionar as acoes de copiar, colar e cortar
+ * tambem é possivel realizar as acoes via atalhos de teclado
+ * Um menu denominado editar entrega 2, tambem pode ser acionado para ativar as acoes
+ * @author vitor
+ */
+public class AuxiliarAtalhos {
   private JMenu jMenu;
   JPopupMenu popupMenu = new JPopupMenu();
 
-  public CutCopyPastActionSupport() {
+    /**
+     * inicializa a classe
+     */
+    public AuxiliarAtalhos() {
       init();
   }
 
   private void init() {
-      jMenu = new JMenu("Edit");
+      jMenu = new JMenu("Editar Entrega 2");
       addAction(new DefaultEditorKit.CutAction(), KeyEvent.VK_X, "Cortar" );
       addAction(new DefaultEditorKit.CopyAction(), KeyEvent.VK_C, "Copiar" );
       addAction(new DefaultEditorKit.PasteAction(), KeyEvent.VK_V, "Colar" );
@@ -30,7 +39,11 @@ public class CutCopyPastActionSupport {
       popupMenu.add(new JMenuItem(action));
   }
 
-  public void setPopup(JTextComponent... components){
+    /**
+     * cria a poupup para quando o botao direito é pressionado
+     * @param components
+     */
+    public void setPopup(JTextComponent... components){
       if(components == null){
           return;
       }
@@ -39,7 +52,11 @@ public class CutCopyPastActionSupport {
       }
   }
 
-  public JMenu getMenu() {
+    /**
+     * retorna o menu. Usado para colocar o menu na barra superior, no programa principal
+     * @return
+     */
+    public JMenu getMenu() {
       return jMenu;
   }
 }
