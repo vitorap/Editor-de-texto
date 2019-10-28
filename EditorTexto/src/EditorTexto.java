@@ -42,7 +42,7 @@ public class EditorTexto extends JFrame {
     private Action _saveAction = new SaveAction();
     private Action _exitAction = new ExitAction();
     private UndoManager undoManager = new UndoManager();
-    private UndoAction undoAction = new UndoAction();
+    UndoAction undoAction = new UndoAction();
     private RedoAction redoAction = new RedoAction();
 
   /////////////////////////////////////////////////////////////////////////// main
@@ -72,7 +72,10 @@ public class EditorTexto extends JFrame {
         JPanel content = new JPanel();
         content.setLayout(new BorderLayout());
         content.add(scrollingText, BorderLayout.CENTER);
-
+        
+        CutCopyPastActionSupport support = new CutCopyPastActionSupport();
+        support.setPopup(_editArea);
+        
         //criando a barra de menu
         JMenuBar menuBar = new JMenuBar();
         JMenu fileMenu = menuBar.add(new JMenu("Arquivo"));
@@ -85,7 +88,7 @@ public class EditorTexto extends JFrame {
         editorMenu.setMnemonic('E');
         editorMenu.add(undoAction);
         editorMenu.add(redoAction);
-
+        
         //preenchendo a janela com conteudo
         setContentPane(content);
         setJMenuBar(menuBar);
