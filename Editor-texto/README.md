@@ -2,7 +2,6 @@ Editor de texto com colaboracao em tempo real via rede
 ==================
 
 Vitor Albuquerque de Paula
--Colocar seu nome Aqui
 
 ### Funciona em:
 Windows, Mac and Linux.
