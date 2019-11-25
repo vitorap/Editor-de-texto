@@ -1,0 +1,618 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ClassDiagram name="Editor-texto">
+  <ClassDiagramComponents>
+    <Class name="Client" package="client" visibility="public" xPosition="127.0" yPosition="830.0">
+      <Fields>
+        <Field name="DEBUG" type="boolean" visibility="private" isStatic="true" isFinal="true"/>
+        <Field name="nameOfDocument" type="String" visibility="private"/>
+        <Field name="textOfDocument" type="String" visibility="private"/>
+        <Field name="versionOfDocument" type="int" visibility="private"/>
+        <Field name="userName" type="String" visibility="private"/>
+        <Field name="actionListener" type="ClientActionListener" visibility="private"/>
+        <Field name="socket" type="Socket" visibility="private"/>
+        <Field name="port" type="int" visibility="private"/>
+        <Field name="host" type="String" visibility="private"/>
+        <Field name="out" type="PrintWriter" visibility="private"/>
+        <Field name="mainWindow" type="MainWindow" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="int" name="port"/>
+          <Argument type="String" name="host"/>
+          <Argument type="MainWindow" name="main"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="start" returnType="void" visibility="public"/>
+        <Method name="setMainWindow" returnType="void" visibility="public">
+          <Argument type="MainWindow" name="frame"/>
+        </Method>
+        <Method name="sendMessageToServer" returnType="void" visibility="public">
+          <Argument type="String" name="message"/>
+        </Method>
+        <Method name="setUsername" returnType="void" visibility="public">
+          <Argument type="String" name="name"/>
+        </Method>
+        <Method name="getUsername" returnType="String" visibility="public"/>
+        <Method name="getDocumentName" returnType="String" visibility="public"/>
+        <Method name="getText" returnType="String" visibility="public"/>
+        <Method name="getVersion" returnType="int" visibility="public"/>
+        <Method name="getSocket" returnType="Socket" visibility="public"/>
+        <Method name="getMainWindow" returnType="MainWindow" visibility="public"/>
+        <Method name="updateDocumentName" returnType="void" visibility="public">
+          <Argument type="String" name="name"/>
+        </Method>
+        <Method name="updateText" returnType="void" visibility="public">
+          <Argument type="String" name="text"/>
+        </Method>
+        <Method name="updateVersion" returnType="void" visibility="public">
+          <Argument type="int" name="newVersion"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="ClientActionListener" package="client" visibility="public" xPosition="2281.0" yPosition="2471.0">
+      <Fields>
+        <Field name="DEBUG" type="boolean" visibility="private" isStatic="true"/>
+        <Field name="client" type="Client" visibility="private"/>
+        <Field name="socket" type="Socket" visibility="private"/>
+        <Field name="in" type="BufferedReader" visibility="private"/>
+        <Field name="regex" type="String" visibility="private" isFinal="true"/>
+        <Field name="groupChangeVersion" type="int" visibility="private" isFinal="true"/>
+        <Field name="groupChangePosition" type="int" visibility="private" isFinal="true"/>
+        <Field name="groupChangeLength" type="int" visibility="private" isFinal="true"/>
+        <Field name="groupChangeText" type="int" visibility="private" isFinal="true"/>
+        <Field name="groupOpenVersion" type="int" visibility="private" isFinal="true"/>
+        <Field name="groupOpenText" type="int" visibility="private" isFinal="true"/>
+        <Field name="main" type="MainWindow" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="Client" name="client"/>
+          <Argument type="Socket" name="socket"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="run" returnType="void" visibility="public"/>
+        <Method name="handleMessageFromServer" returnType="void" visibility="public">
+          <Argument type="String" name="input"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="ClientTest" package="client" visibility="public" xPosition="1407.0" yPosition="2470.0">
+      <Fields>
+        <Field name="main" type="MainWindow" visibility="package"/>
+        <Field name="client" type="Client" visibility="package"/>
+        <Field name="clientActionListener" type="ClientActionListener" visibility="package"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="testForError1" returnType="void" visibility="public"/>
+        <Method name="testForError2" returnType="void" visibility="public"/>
+        <Method name="testForError3" returnType="void" visibility="public"/>
+        <Method name="testNew" returnType="void" visibility="public"/>
+        <Method name="testOpen" returnType="void" visibility="public"/>
+        <Method name="testChange" returnType="void" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="Client_main" package="client" visibility="public" xPosition="3213.0" yPosition="2280.0">
+      <Fields/>
+      <Constructors/>
+      <Methods>
+        <Method name="main" returnType="void" visibility="public" isStatic="true">
+          <Argument type="String[]" name="args"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="Debug" package="debug" visibility="public" xPosition="2986.0" yPosition="2679.0">
+      <Fields>
+        <Field name="DEBUG" type="boolean" visibility="public" isStatic="true" isFinal="true"/>
+        <Field name="VERBOSE" type="boolean" visibility="public" isStatic="true" isFinal="true"/>
+      </Fields>
+      <Constructors/>
+      <Methods/>
+    </Class>
+    <Class name="ConnectView" package="gui" visibility="public" xPosition="1093.0" yPosition="1148.0">
+      <Fields>
+        <Field name="frame" type="MainWindow" visibility="private" isFinal="true"/>
+        <Field name="serverAddressLabel" type="JLabel" visibility="private" isFinal="true"/>
+        <Field name="hostLabel" type="JLabel" visibility="private" isFinal="true"/>
+        <Field name="host" type="JTextField" visibility="private" isFinal="true"/>
+        <Field name="portLabel" type="JLabel" visibility="private" isFinal="true"/>
+        <Field name="port" type="JTextField" visibility="private" isFinal="true"/>
+        <Field name="connectButton" type="JButton" visibility="private" isFinal="true"/>
+        <Field name="client" type="Client" visibility="private"/>
+        <Field name="DEBUG" type="boolean" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="MainWindow" name="frame"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="actionPerformed" returnType="void" visibility="public">
+          <Argument type="ActionEvent" name="e"/>
+        </Method>
+        <Method name="getClient" returnType="Client" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="DocumentView" package="gui" visibility="public" xPosition="2156.0" yPosition="109.0">
+      <Fields>
+        <Field name="serialVersionUID" type="long" visibility="private" isStatic="true" isFinal="true"/>
+        <Field name="DEBUG" type="boolean" visibility="private" isStatic="true" isFinal="true"/>
+        <Field name="frame" type="JFrame" visibility="private"/>
+        <Field name="menu" type="JMenuBar" visibility="private"/>
+        <Field name="file" type="JMenu" visibility="private"/>
+        <Field name="newfile" type="JMenuItem" visibility="private"/>
+        <Field name="documentNameLabel" type="JLabel" visibility="private"/>
+        <Field name="documentName" type="String" visibility="private"/>
+        <Field name="area" type="JTextArea" visibility="private"/>
+        <Field name="scrollpane" type="JScrollPane" visibility="private"/>
+        <Field name="caret" type="DefaultCaret" visibility="private"/>
+        <Field name="documentListener" type="TextDocumentListener" visibility="private"/>
+        <Field name="client" type="Client" visibility="private" isFinal="true"/>
+        <Field name="username" type="String" visibility="private" isFinal="true"/>
+        <Field name="currentVersion" type="int" visibility="private"/>
+        <Field name="sent" type="boolean" visibility="private"/>
+        <Field name="undoManager" type="UndoManager" visibility="private"/>
+        <Field name="undoAction" type="UndoAction" visibility="package"/>
+        <Field name="redoAction" type="RedoAction" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="MainWindow" name="frame"/>
+        </Constructor>
+        <Constructor visibility="public">
+          <Argument type="MainWindow" name="frame"/>
+          <Argument type="String" name="documentName"/>
+          <Argument type="String" name="text"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="createLayout" returnType="void" visibility="private"/>
+        <Method name="manageCursor" returnType="void" visibility="private">
+          <Argument type="int" name="currentPos"/>
+          <Argument type="int" name="pivotPosition"/>
+          <Argument type="int" name="amount"/>
+        </Method>
+        <Method name="updateDocument" returnType="void" visibility="public">
+          <Argument type="String" name="updatedText"/>
+          <Argument type="int" name="editPosition"/>
+          <Argument type="int" name="editLength"/>
+          <Argument type="String" name="username"/>
+          <Argument type="int" name="version"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="ExitWindowListener" package="gui" visibility="public" xPosition="98.0" yPosition="364.0">
+      <Fields>
+        <Field name="client" type="Client" visibility="private" isFinal="true"/>
+        <Field name="VERBOSE" type="boolean" visibility="private" isStatic="true" isFinal="true"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="Client" name="client"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="windowOpened" returnType="void" visibility="public">
+          <Argument type="WindowEvent" name="paramWindowEvent"/>
+        </Method>
+        <Method name="windowClosing" returnType="void" visibility="public">
+          <Argument type="WindowEvent" name="paramWindowEvent"/>
+        </Method>
+        <Method name="windowClosed" returnType="void" visibility="public">
+          <Argument type="WindowEvent" name="paramWindowEvent"/>
+        </Method>
+        <Method name="windowIconified" returnType="void" visibility="public">
+          <Argument type="WindowEvent" name="paramWindowEvent"/>
+        </Method>
+        <Method name="windowDeiconified" returnType="void" visibility="public">
+          <Argument type="WindowEvent" name="paramWindowEvent"/>
+        </Method>
+        <Method name="windowActivated" returnType="void" visibility="public">
+          <Argument type="WindowEvent" name="paramWindowEvent"/>
+        </Method>
+        <Method name="windowDeactivated" returnType="void" visibility="public">
+          <Argument type="WindowEvent" name="paramWindowEvent"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="MainWindow" package="gui" visibility="public" xPosition="1680.0" yPosition="779.0">
+      <Fields>
+        <Field name="DEBUG" type="boolean" visibility="private" isStatic="true" isFinal="true"/>
+        <Field name="serialVersionUID" type="long" visibility="private" isStatic="true" isFinal="true"/>
+        <Field name="welcomeView" type="WelcomeView" visibility="private"/>
+        <Field name="documentView" type="DocumentView" visibility="private"/>
+        <Field name="connectView" type="ConnectView" visibility="private"/>
+        <Field name="openDocumentDialog" type="OpenDocumentDialog" visibility="private"/>
+        <Field name="documentNames" type="ArrayList&lt;String&gt;" visibility="private"/>
+        <Field name="client" type="Client" visibility="private"/>
+        <Field name="username" type="String" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="switchToWelcomeView" returnType="void" visibility="public"/>
+        <Method name="openUsernameDialog" returnType="void" visibility="public"/>
+        <Method name="setUsername" returnType="void" visibility="public">
+          <Argument type="String" name="name"/>
+        </Method>
+        <Method name="getUsername" returnType="String" visibility="public"/>
+        <Method name="switchToDocumentView" returnType="void" visibility="public">
+          <Argument type="String" name="documentName"/>
+          <Argument type="String" name="documentText"/>
+        </Method>
+        <Method name="removeAllViews" returnType="void" visibility="private"/>
+        <Method name="displayOpenDocuments" returnType="void" visibility="public">
+          <Argument type="ArrayList&lt;String&gt;" name="documentNames"/>
+        </Method>
+        <Method name="updateDocument" returnType="void" visibility="public">
+          <Argument type="String" name="documentText"/>
+          <Argument type="int" name="editPosition"/>
+          <Argument type="int" name="editLength"/>
+          <Argument type="String" name="username"/>
+          <Argument type="int" name="version"/>
+        </Method>
+        <Method name="openVersionErrorView" returnType="void" visibility="public">
+          <Argument type="String" name="error"/>
+        </Method>
+        <Method name="openErrorView" returnType="void" visibility="public">
+          <Argument type="String" name="error"/>
+        </Method>
+        <Method name="setClient" returnType="void" visibility="public">
+          <Argument type="Client" name="client"/>
+        </Method>
+        <Method name="getClient" returnType="Client" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="OpenDocumentDialog" package="gui" visibility="public" xPosition="1456.0" yPosition="1367.0">
+      <Fields>
+        <Field name="serialVersionUID" type="long" visibility="private" isStatic="true" isFinal="true"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="ArrayList&lt;String&gt;" name="documentNames"/>
+          <Argument type="Client" name="client"/>
+        </Constructor>
+      </Constructors>
+      <Methods/>
+    </Class>
+    <Class name="WelcomeView" package="gui" visibility="public" xPosition="605.0" yPosition="364.0">
+      <Fields>
+        <Field name="frame" type="MainWindow" visibility="private" isFinal="true"/>
+        <Field name="welcomeLabel" type="JLabel" visibility="private"/>
+        <Field name="createNewLabel" type="JLabel" visibility="private"/>
+        <Field name="documentName" type="JTextField" visibility="private"/>
+        <Field name="createNewButton" type="JButton" visibility="private"/>
+        <Field name="client" type="Client" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="MainWindow" name="frame"/>
+          <Argument type="Client" name="client"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="actionPerformed" returnType="void" visibility="public">
+          <Argument type="ActionEvent" name="e"/>
+        </Method>
+        <Method name="getClient" returnType="Client" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="ConnectViewThread" package="handlers" visibility="public" xPosition="715.0" yPosition="1319.0">
+      <Fields>
+        <Field name="connectView" type="ConnectView" visibility="private" isFinal="true"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="ConnectView" name="connectView"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="run" returnType="void" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="Edit" package="handlers" visibility="public" xPosition="2518.0" yPosition="1666.0">
+      <Fields>
+        <Field name="documentName" type="String" visibility="private" isFinal="true"/>
+        <Field name="type" type="Type" visibility="private" isFinal="true"/>
+        <Field name="text" type="String" visibility="private" isFinal="true"/>
+        <Field name="length" type="int" visibility="private" isFinal="true"/>
+        <Field name="offset" type="int" visibility="private" isFinal="true"/>
+        <Field name="version" type="int" visibility="private" isFinal="true"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="String" name="documentName"/>
+          <Argument type="Type" name="editType"/>
+          <Argument type="String" name="text"/>
+          <Argument type="int" name="version"/>
+          <Argument type="int" name="offset"/>
+          <Argument type="int" name="length"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="checkRep" returnType="void" visibility="private"/>
+        <Method name="getType" returnType="Type" visibility="public"/>
+        <Method name="getText" returnType="String" visibility="public"/>
+        <Method name="getOffset" returnType="int" visibility="public"/>
+        <Method name="getLength" returnType="int" visibility="public"/>
+        <Method name="getVersion" returnType="int" visibility="public"/>
+        <Method name="getDocumentName" returnType="String" visibility="public"/>
+        <Method name="toString" returnType="String" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="EditManager" package="handlers" visibility="public" xPosition="2518.0" yPosition="816.0">
+      <Fields>
+        <Field name="editLog" type="Map&lt;String, List&lt;Edit&gt;&gt;" visibility="private" isFinal="true"/>
+        <Field name="DEBUG" type="boolean" visibility="private" isStatic="true" isFinal="true"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="createNewlog" returnType="void" visibility="public" isSynchronized="true">
+          <Argument type="String" name="documentName"/>
+        </Method>
+        <Method name="logEdit" returnType="void" visibility="public" isSynchronized="true">
+          <Argument type="Edit" name="edit"/>
+        </Method>
+        <Method name="manageEdit" returnType="String" visibility="public" isSynchronized="true">
+          <Argument type="String" name="documentName"/>
+          <Argument type="int" name="version"/>
+          <Argument type="int" name="offset"/>
+        </Method>
+        <Method name="manageOffset" returnType="int" visibility="private">
+          <Argument type="int" name="currentOffset"/>
+          <Argument type="int" name="otherOffset"/>
+          <Argument type="int" name="length"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="Encoding" package="handlers" visibility="public" xPosition="2986.0" yPosition="2459.0">
+      <Fields/>
+      <Constructors/>
+      <Methods>
+        <Method name="encode" returnType="String" visibility="public" isStatic="true">
+          <Argument type="String" name="text"/>
+        </Method>
+        <Method name="decode" returnType="String" visibility="public" isStatic="true">
+          <Argument type="String" name="text"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="MessageSwingWorker" package="handlers" visibility="public" xPosition="77.0" yPosition="1794.0">
+      <Fields>
+        <Field name="client" type="Client" visibility="private"/>
+        <Field name="message" type="String" visibility="private"/>
+        <Field name="sent" type="boolean" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="Client" name="client"/>
+          <Argument type="String" name="message"/>
+          <Argument type="boolean" name="sent"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="doInBackground" returnType="Void" visibility="protected"/>
+        <Method name="done" returnType="void" visibility="protected"/>
+      </Methods>
+    </Class>
+    <Class name="WelcomeViewThread" package="handlers" visibility="public" xPosition="742.0" yPosition="2181.0">
+      <Fields>
+        <Field name="DEBUG" type="boolean" visibility="private" isStatic="true" isFinal="true"/>
+        <Field name="message" type="String" visibility="private" isFinal="true"/>
+        <Field name="client" type="Client" visibility="private" isFinal="true"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="Client" name="client"/>
+          <Argument type="String" name="message"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="run" returnType="void" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="OurThreadClass" package="server" visibility="public" xPosition="3129.0" yPosition="1680.0">
+      <Fields>
+        <Field name="DEBUG" type="boolean" visibility="private" isStatic="true" isFinal="true"/>
+        <Field name="socket" type="Socket" visibility="package" isFinal="true"/>
+        <Field name="alive" type="boolean" visibility="private"/>
+        <Field name="username" type="String" visibility="private"/>
+        <Field name="server" type="Server" visibility="private" isFinal="true"/>
+        <Field name="regex" type="String" visibility="private" isFinal="true"/>
+        <Field name="error1" type="String" visibility="private" isFinal="true"/>
+        <Field name="error2" type="String" visibility="private" isFinal="true"/>
+        <Field name="error3" type="String" visibility="private" isFinal="true"/>
+        <Field name="error4" type="String" visibility="private" isFinal="true"/>
+        <Field name="error5" type="String" visibility="private" isFinal="true"/>
+        <Field name="error6" type="String" visibility="private" isFinal="true"/>
+        <Field name="error7" type="String" visibility="private" isFinal="true"/>
+        <Field name="sleep" type="boolean" visibility="private" isFinal="true"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="Socket" name="socket"/>
+          <Argument type="Server" name="server"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="run" returnType="void" visibility="public"/>
+        <Method name="handleConnection" returnType="void" visibility="private">
+          <Argument type="Socket" name="socket"/>
+        </Method>
+        <Method name="handleRequest" returnType="String" visibility="public">
+          <Argument type="String" name="input"/>
+        </Method>
+        <Method name="createMessage" returnType="String" visibility="private">
+          <Argument type="String" name="documentName"/>
+          <Argument type="String" name="username"/>
+          <Argument type="int" name="version"/>
+          <Argument type="int" name="offset"/>
+          <Argument type="int" name="changeLength"/>
+          <Argument type="String" name="documentText"/>
+        </Method>
+        <Method name="getSocket" returnType="Socket" visibility="public"/>
+        <Method name="getUsername" returnType="String" visibility="public"/>
+        <Method name="getAlive" returnType="boolean" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="OurThreadClassTest" package="server" visibility="public" xPosition="3453.0" yPosition="2413.0">
+      <Fields>
+        <Field name="error1" type="String" visibility="private" isFinal="true"/>
+        <Field name="error2" type="String" visibility="private" isFinal="true"/>
+        <Field name="error3" type="String" visibility="private" isFinal="true"/>
+        <Field name="error4" type="String" visibility="private" isFinal="true"/>
+        <Field name="error5" type="String" visibility="private" isFinal="true"/>
+        <Field name="error6" type="String" visibility="private" isFinal="true"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="equals" returnType="void" visibility="public">
+          <Argument type="Map&lt;String, StringBuffer&gt;" name="map1"/>
+          <Argument type="Map&lt;String, StringBuffer&gt;" name="map2"/>
+        </Method>
+        <Method name="testForBye1" returnType="void" visibility="public"/>
+        <Method name="testForBye2" returnType="void" visibility="public"/>
+        <Method name="testLook" returnType="void" visibility="public"/>
+        <Method name="testNew" returnType="void" visibility="public"/>
+        <Method name="testOpen" returnType="void" visibility="public"/>
+        <Method name="testChange" returnType="void" visibility="public"/>
+        <Method name="grammarMatchTest" returnType="void" visibility="public"/>
+        <Method name="overallTest1" returnType="void" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="Server" package="server" visibility="public" xPosition="3213.0" yPosition="731.0">
+      <Fields>
+        <Field name="DEBUG" type="boolean" visibility="private" isStatic="true" isFinal="true"/>
+        <Field name="documentMap" type="Map&lt;String, StringBuffer&gt;" visibility="private" isFinal="true"/>
+        <Field name="documentVersionMap" type="Map&lt;String, Integer&gt;" visibility="private" isFinal="true"/>
+        <Field name="serverSocket" type="ServerSocket" visibility="private"/>
+        <Field name="threadList" type="ArrayList&lt;OurThreadClass&gt;" visibility="private"/>
+        <Field name="usernameList" type="ArrayList&lt;String&gt;" visibility="private"/>
+        <Field name="editManager" type="EditManager" visibility="private" isFinal="true"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="int" name="port"/>
+          <Argument type="Map&lt;String, StringBuffer&gt;" name="documents"/>
+          <Argument type="Map&lt;String, Integer&gt;" name="version"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="serve" returnType="void" visibility="public"/>
+        <Method name="getDocumentMap" returnType="Map&lt;String, StringBuffer&gt;" visibility="public" isSynchronized="true"/>
+        <Method name="nameIsAvailable" returnType="boolean" visibility="public" isSynchronized="true">
+          <Argument type="String" name="name"/>
+        </Method>
+        <Method name="addUsername" returnType="void" visibility="public" isSynchronized="true">
+          <Argument type="OurThreadClass" name="t"/>
+          <Argument type="String" name="name"/>
+        </Method>
+        <Method name="getDocumentVersionMap" returnType="Map&lt;String, Integer&gt;" visibility="public" isSynchronized="true"/>
+        <Method name="getAllDocuments" returnType="String" visibility="public" isSynchronized="true"/>
+        <Method name="manageEdit" returnType="String" visibility="public" isSynchronized="true">
+          <Argument type="String" name="documentName"/>
+          <Argument type="int" name="version"/>
+          <Argument type="int" name="offset"/>
+        </Method>
+        <Method name="documentMapisEmpty" returnType="boolean" visibility="public" isSynchronized="true"/>
+        <Method name="versionMapisEmpty" returnType="boolean" visibility="public" isSynchronized="true"/>
+        <Method name="logEdit" returnType="void" visibility="public" isSynchronized="true">
+          <Argument type="Edit" name="edit"/>
+        </Method>
+        <Method name="removeThread" returnType="void" visibility="public" isSynchronized="true">
+          <Argument type="OurThreadClass" name="t"/>
+        </Method>
+        <Method name="addNewDocument" returnType="void" visibility="public" isSynchronized="true">
+          <Argument type="String" name="documentName"/>
+        </Method>
+        <Method name="updateVersion" returnType="void" visibility="public" isSynchronized="true">
+          <Argument type="String" name="documentName"/>
+          <Argument type="int" name="version"/>
+        </Method>
+        <Method name="getVersion" returnType="int" visibility="public" isSynchronized="true">
+          <Argument type="String" name="documentName"/>
+        </Method>
+        <Method name="delete" returnType="void" visibility="public" isSynchronized="true">
+          <Argument type="String" name="documentName"/>
+          <Argument type="int" name="offset"/>
+          <Argument type="int" name="endPosition"/>
+        </Method>
+        <Method name="insert" returnType="void" visibility="public" isSynchronized="true">
+          <Argument type="String" name="documentName"/>
+          <Argument type="int" name="offset"/>
+          <Argument type="String" name="text"/>
+        </Method>
+        <Method name="getDocumentText" returnType="String" visibility="public" isSynchronized="true">
+          <Argument type="String" name="documentName"/>
+        </Method>
+        <Method name="getDocumentLength" returnType="int" visibility="public" isSynchronized="true">
+          <Argument type="String" name="documentName"/>
+        </Method>
+        <Method name="returnMessageToEveryOtherClient" returnType="void" visibility="public">
+          <Argument type="String" name="message"/>
+          <Argument type="OurThreadClass" name="thread"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="ServerTest" package="server" visibility="public" xPosition="2986.0" yPosition="2299.0">
+      <Fields/>
+      <Constructors/>
+      <Methods/>
+    </Class>
+    <Class name="Server_main" package="server" visibility="public" xPosition="2694.0" yPosition="2254.0">
+      <Fields>
+        <Field name="DEBUG" type="boolean" visibility="private" isStatic="true" isFinal="true"/>
+        <Field name="defaultPort" type="int" visibility="private" isStatic="true" isFinal="true"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="main" returnType="void" visibility="public" isStatic="true">
+          <Argument type="String[]" name="args"/>
+        </Method>
+        <Method name="runServer" returnType="void" visibility="public" isStatic="true">
+          <Argument type="int" name="port"/>
+        </Method>
+      </Methods>
+    </Class>
+  </ClassDiagramComponents>
+  <ClassDiagramRelations>
+    <HasRelation name="connectView" source="handlers.ConnectViewThread" target="gui.ConnectView" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="handlers.EditManager" target="handlers.Edit" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="gui.WelcomeView" target="client.Client" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="client" source="handlers.WelcomeViewThread" target="client.Client" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="frame" source="gui.WelcomeView" target="gui.MainWindow" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="editLog" source="handlers.EditManager" target="handlers.Edit" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="Map&lt;String, List&lt;Edit&gt;&gt;"/>
+    <HasRelation name="editManager" source="server.Server" target="handlers.EditManager" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="client" source="gui.MainWindow" target="client.Client" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="server" source="server.OurThreadClass" target="server.Server" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="gui.ConnectView" target="client.Client" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="main" source="client.ClientTest" target="gui.MainWindow" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="connectView" source="gui.MainWindow" target="gui.ConnectView" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="client" source="client.ClientActionListener" target="client.Client" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="client" source="gui.WelcomeView" target="client.Client" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="client" source="gui.ExitWindowListener" target="client.Client" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="frame" source="gui.ConnectView" target="gui.MainWindow" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="main" source="client.ClientActionListener" target="gui.MainWindow" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="server.Server" target="handlers.Edit" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="mainWindow" source="client.Client" target="gui.MainWindow" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="actionListener" source="client.Client" target="client.ClientActionListener" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="ClientActionListener"/>
+    <HasRelation name="client" source="handlers.MessageSwingWorker" target="client.Client" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="client" source="gui.DocumentView" target="client.Client" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="client.Client" target="gui.MainWindow" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="client" source="gui.ConnectView" target="client.Client" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="openDocumentDialog" source="gui.MainWindow" target="gui.OpenDocumentDialog" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="clientActionListener" source="client.ClientTest" target="client.ClientActionListener" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="ClientActionListener"/>
+    <HasRelation name="documentView" source="gui.MainWindow" target="gui.DocumentView" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="server.Server" target="server.OurThreadClass" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="gui.MainWindow" target="client.Client" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="threadList" source="server.Server" target="server.OurThreadClass" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="ArrayList&lt;OurThreadClass&gt;"/>
+    <HasRelation name="welcomeView" source="gui.MainWindow" target="gui.WelcomeView" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="client" source="client.ClientTest" target="client.Client" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+  </ClassDiagramRelations>
+</ClassDiagram>
