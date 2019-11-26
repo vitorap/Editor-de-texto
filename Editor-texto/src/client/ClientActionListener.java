@@ -13,10 +13,8 @@ import java.util.regex.Pattern;
 import debug.Debug;
 
 /**
- * Listens for the update from the server, and handles the message from the
- * server.
+ * Escuta as atualizaçoes do servidor e lida com as mensagens do servidor.
  * 
- * @author LLPadmin
  * 
  */
 public class ClientActionListener {
@@ -37,7 +35,7 @@ public class ClientActionListener {
 	private MainWindow main;
 
 	/**
-	 * Creates a new ClientActionListener with a client and a socket
+	 * Cria um novo ClientActionListener com um cliente e um socket
 	 * 
 	 * @param client
 	 * @param socket
@@ -49,7 +47,7 @@ public class ClientActionListener {
 	}
     
 	/**
-	 * listens for server updates and handle the message
+	 * ouve atualizações do servidor e manipula a mensagem
 	 * @throws IOException
 	 */
 	public void run() throws IOException {
@@ -68,42 +66,27 @@ public class ClientActionListener {
 
 	/**
 	 * 
-	 * Handle the message from the server by updating the GUI and the nameOfDocument, textOfDocument as well
+	 * Lida com mensagens do servidor atualizando a GUI e o nameOfDocument, textOfDocument também
 	 * 
-	 * Server-to-Client Message Protocol 
-	 * message :== (Error|Alldocs | Newdocument | Opendocument | ChangeText) 
-	 * Error :== error [1-6] .+
-	 * Alldocs :== "alldocs " DocumentName 
-	 * Newdocument:=="new " DocumentName  
-	 * Opendocument:=="open " DocumentName Version DocumentText
-	 * ChangeText :=="change " DocumentName Username Version ChangePosition ChangeLength DocumentText 
-	 * Version :== Int+
-	 * ChangePosition :== Int+
-	 * ChangeLength :== -?Int+
-	 * DocumentName:==[\\d\\w]+
-	 * DocumentText:==(Chars*\n)* 
-	 * Username :==[\\d\\w]+
-	 * Chars:== .+ 
-	 * Int:== [0-9]
 	 */
 	public void handleMessageFromServer(String input) {
 		input = input.trim();
-		if(DEBUG){ System.out.println("Input message the client gets from the server is " + input);}
+		if(DEBUG){ System.out.println("A mensagem de entrada que o cliente recebe do servidor é" + input);}
 		Pattern pattern = Pattern.compile(regex);
 		Matcher matcher = pattern.matcher(input);
 
 		if (!matcher.find()) {
-			// invalid input
-			main.openErrorView("from CAL: regex failure");
+			// entrada invalida
+			main.openErrorView("da CAL: falha de regex");
 		}
 		String[] tokens = input.split(" ");
 		
-		// 'error' message , only update the front-end
+		// 'error', msg de erro, atualizar apenas o front-end
 		if (tokens[0].equals("Error:")) {
 			main.openErrorView(input);
 		}
 
-		// "alldocs" message, only update the front-end
+		// "alldocs" msg do tipo alldocs, atualizar apenas o front-end
 		else if (tokens[0].equals("alldocs")) {
 			ArrayList<String> names = new ArrayList<String>();
 			for (int i = 1; i < tokens.length; i++) {
@@ -118,23 +101,20 @@ public class ClientActionListener {
 			
 		}
 
-		// "Create" a document with valid name, needs to update the front and
-		// back ends
+		//Cria um documento com nome válido, precisa atualizar a front e back
 		else if (tokens[0].equals("new")) {
 			main.switchToDocumentView(tokens[1], "");
 			client.updateDocumentName(tokens[1]);
-			// add for version: set the version to 1
 			client.updateVersion(1);
 		}
 
-		// "Open the document", update both front and end
+		// "Abrir o documento", atualiza o front e end
 		else if (tokens[0].equals("open")) {
 			client.updateDocumentName(tokens[1]);
-			//add for version:
 			client.updateVersion(Integer.parseInt(matcher.group(groupOpenVersion)));
 			String documentText = matcher.group(groupOpenText);
 			client.updateText(documentText);
-			if (DEBUG){System.out.println("The open message gets the document with text:" + documentText);}
+			if (DEBUG){System.out.println("A mensagem de abertura recebe o documento com texto:" + documentText);}
 			main.switchToDocumentView(tokens[1], documentText);
 
 			
@@ -144,11 +124,10 @@ public class ClientActionListener {
 		// Change the document.
 		else if (tokens[0].equals("change")) {
 			// first, need to check the documents are the same
-			if(DEBUG){System.out.println("from CAL: updating document(in ClientActionListener.java)");}
+			if(DEBUG){System.out.println("da CAL: atualizando o documento (em ClientActionListener.java)");}
 			int version = Integer.parseInt(matcher.group(groupChangeVersion));
 			if (client.getDocumentName()!=null) {
 				if(client.getDocumentName().equals(tokens[1]) ){
-				// The document is changed, must update the back-end and front end
 				String username = tokens[2];
 				String documentText = matcher.group(groupChangeText);
 				if(DEBUG){System.out.println(documentText);}

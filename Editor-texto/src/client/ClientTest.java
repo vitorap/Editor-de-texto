@@ -8,69 +8,66 @@ import org.junit.Test;
 public class ClientTest {
 
     
-    //testing strategy:
-	//
-	// ********************************************************************************
-	// 
-    // 1. test if the client handles the messages from the server correctly
-	//
-    // Partition the input space according whether the input matches our
-    // grammar for server-to-client message and also the starting word of the message.
+// estratégia de teste:
+//
+// ************************************************** ********************************
+//
+// 1. teste se o cliente manipula as mensagens do servidor corretamente
+//
+    // Particione o espaço de entrada de acordo com se a entrada corresponde a nossa
+    // gramática da mensagem do servidor para o cliente e também a palavra inicial da mensagem.
     // i.e: private final String regex = "(error [123]: .+)|"
     // + "(alldocs .\\+)|(new [\\w|\\d]+)|(open .[\\w|\\d]+)|"
     // + "(change [\\w|\\d]+ (.+))";
 	// Test for error, alldocs, new, open, change messages.
-	//
-    // For each message, test if the underlying document state changed. 
-    // Also by hand testing for different GUIs.
-	
-	// 2.Also check for valid connection to the server 
-	// and the initiation of a new main window GUI for the client side.
-	// 
-	// 3. We also test the methods getText() and getName() for the client.
-	//
+//
+// Para cada mensagem, teste se o estado do documento subjacente foi alterado.
+// Também testando manualmente para diferentes GUIs.
+
+// 2.Verifique também se há conexão válida com o servidor
+// e o início de uma nova GUI da janela principal para o lado do cliente.
+//
+// 3. Também testamos os métodos getText () e getName () para o cliente.
+//
 	
 
     
      MainWindow main= new MainWindow();
      Client client= new Client(4444, "localhost", main);
-   //making a new action listener
+   //fazendo um novo ouvinte de açoes
      ClientActionListener clientActionListener=new ClientActionListener(client, client.getSocket());
       
        
     @Test
     public void testForError1(){
-        String input= "Error: Document already exists.";
+        String input= "Erro: Documento ja existe";
         clientActionListener.handleMessageFromServer(input);
         assertEquals(null, client.getDocumentName());
         assertEquals(null, client.getText());
-        //GUI pops up with the message "error 1: Document already exists."
        
     }
     
     @Test
     public void testForError2(){
-        String input= "Error: No such document.";
+        String input= "Erro: Esse documento não existe.";
         clientActionListener.handleMessageFromServer(input);
         assertEquals(null, client.getDocumentName());
         assertEquals(null, client.getText());
-        //GUI pops up with the message "error 2: No such document."
        
     }
     
     @Test
     public void testForError3(){
-        String input=  "Error: No document exist yet.";
+        String input=  "Erro: Ainda não existe documento.";
         clientActionListener.handleMessageFromServer(input);
         assertEquals(null, client.getDocumentName());
         assertEquals(null, client.getText());
-      //GUI pops up with the message "error 3: No document exist yet."
     }
     
 
        @Test
         public void testNew(){
-            String input=  "new abc";
+            String input=  "novo abcdario";
             clientActionListener.handleMessageFromServer(input);
             assertEquals("abc", client.getDocumentName()); 
             assertEquals(null, client.getText());
@@ -78,7 +75,7 @@ public class ClientTest {
        
        @Test
        public void testOpen(){
-           String input=  "open abc 4 bacg dgege vg";
+           String input=  "abrir abc 4 bacg dgege vg";
            clientActionListener.handleMessageFromServer(input);
            assertEquals("abc", client.getDocumentName()); 
            assertEquals(4, client.getVersion()); 
@@ -87,13 +84,13 @@ public class ClientTest {
     
        @Test
        public void testChange(){
-           String inputnew=  "new abc";
+           String inputnew=  "novo abc";
            clientActionListener.handleMessageFromServer(inputnew);
-           String input=  "change abc name 1 1 1 test test";
+           String input=  "mudar abc nome 1 1 1 testando som som";
            clientActionListener.handleMessageFromServer(input);
            assertEquals("abc", client.getDocumentName()); 
            assertEquals(1, client.getVersion()); 
-           assertEquals("test test", client.getText()); 
+           assertEquals("teste teste", client.getText()); 
        }
     
 }

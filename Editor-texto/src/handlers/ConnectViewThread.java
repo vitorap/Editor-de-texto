@@ -7,9 +7,10 @@ import java.io.IOException;
 import javax.swing.JOptionPane;
 
 /**
- * ConnectViewThread makes a new thread object and when that thread runs, 
- *  it switches client's the current connect view to the welcome view and 
- *  also start the client so that the client could get the server messages.
+ *O ConnectViewThread cria uma nova thread, quando essa thread é executada, 
+ * alterna a visualização de conexão atual do cliente para a visualização de
+ * boas-vindas e também inicia o cliente para que o cliente possa receber 
+ * as mensagens do servidor.
  *
  */
 public class ConnectViewThread extends Thread {
@@ -17,15 +18,14 @@ public class ConnectViewThread extends Thread {
     
     /**
      * Constructor
-     * @param connectView the view that the client is originally in
+     * @param connectView a view que estavamos antes
      */
 	public ConnectViewThread(ConnectView connectView) {
 		this.connectView=connectView;
 	}
 
 	/**
-	 *  Starts the client in a new ConnectView thread.
-	 *  and start the client.
+	 *  Inicia o cliente em uma nova thread do ConnectView e inicia o cliente.
      *
 	 */
 	public void run() {
@@ -39,7 +39,7 @@ public class ConnectViewThread extends Thread {
 				    JOptionPane.ERROR_MESSAGE);
 		} catch (IllegalArgumentException e1){
 			JOptionPane.showMessageDialog(null,
-				    "Illegal arguments",
+				    "Argumentos invalidos",
 				    "Error",
 				    JOptionPane.ERROR_MESSAGE);
 			e1.printStackTrace();

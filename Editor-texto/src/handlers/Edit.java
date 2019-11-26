@@ -1,14 +1,15 @@
 package handlers;
 
 /**
- * Class representing an edit on the document. It stores the type of edit, the text added if the
- * type is Insert, the length of the edit, the offset, and the version of the document the edit was made on.
- * 
+ * Classe que representa uma edição no documento. 
+ * Armazena o tipo de edição,o texto adicionado (se for do tipo Inserir), 
+ * o comprimento da edição, o deslocamento e a versão do documento em que a edição foi feita.
+  *
  */
 public class Edit {
 	
 	/**
-	 * the types that an edit can be
+	 * os tipos que uma edição pode ser
 	 */
 	public static enum Type {INSERT, REMOVE}
 
@@ -19,12 +20,9 @@ public class Edit {
 	private final int offset;
 	private final int version;
 
-	// Rep invariant:
-	// type and text cannot be null
-	// editType can only be insert or remove
 
 	/**
-	 * Creates a new Edit
+	 * Cria uma nova edição
 	 * @param documentName
 	 * @param editType
 	 * @param text
@@ -44,49 +42,48 @@ public class Edit {
 	}
     
 	/**
-	 * check the rep invariant
 	 */
 	private void checkRep() {
 		assert documentName != null;
 		assert type != null;
 	}
 
-	/** @return the type of the edit */
+	/** @return o tipo da edicao*/
 	public Type getType() {
 		return type;
 	}
 
 	/**
 	 * 
-	 * @return the text of the edit. Text is "" if the type of edit is an
-	 *         insert.
+	 * @return o texto da edicao. o texto eh "" se o tipo da edicao for
+         * insert
 	 */
 	public String getText() {
 		return text;
 	}
 
-	/** @return the offset of the edit. */
+	/** @return o offset da edicao */
 	public int getOffset() {
 		return offset;
 	}
 
-	/** @return the length of the edit. */
+	/** @return o tamanho da edicao */
 	public int getLength() {
 		return length;
 	}
 
-	/** @return the version of the edit. */
+	/** @return a versao da edicao */
 	public int getVersion() {
 		return version;
 	}
 
-	/** @return the documentName of the edit. */
+	/** @return o nome do doc da edicao. */
 	public String getDocumentName() {
 		return documentName;
 	}
 
 	/**
-	 * Creates a string representation of the edit
+	 * Cria uma string que representa a edição
 	 */
 	public String toString() {
 		return "Edit: " + documentName + " type: " + type + " v: " + version

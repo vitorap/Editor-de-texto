@@ -2,6 +2,30 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/C:/Users/vitor/OneDrive/Documentos/GitHub/Editor-de-texto/Editor-texto/src/handlers/Encoding.java</file>
+            <file>file:/C:/Users/vitor/OneDrive/Documentos/GitHub/Editor-de-texto/Editor-texto/src/handlers/WelcomeViewThread.java</file>
+            <file>file:/C:/Users/vitor/OneDrive/Documentos/GitHub/Editor-de-texto/Editor-texto/src/server/Server.java</file>
+            <file>file:/C:/Users/vitor/OneDrive/Documentos/GitHub/Editor-de-texto/Editor-texto/src/gui/MainWindow.java</file>
+            <file>file:/C:/Users/vitor/OneDrive/Documentos/GitHub/Editor-de-texto/Editor-texto/src/client/Client.java</file>
+            <file>file:/C:/Users/vitor/OneDrive/Documentos/GitHub/Editor-de-texto/Editor-texto/src/handlers/ConnectViewThread.java</file>
+            <file>file:/C:/Users/vitor/OneDrive/Documentos/GitHub/Editor-de-texto/Editor-texto/src/gui/OpenDocumentDialog.java</file>
+            <file>file:/C:/Users/vitor/OneDrive/Documentos/GitHub/Editor-de-texto/Editor-texto/src/handlers/Edit.java</file>
+            <file>file:/C:/Users/vitor/OneDrive/Documentos/GitHub/Editor-de-texto/Editor-texto/src/gui/DocumentView.java</file>
+            <file>file:/C:/Users/vitor/OneDrive/Documentos/GitHub/Editor-de-texto/Editor-texto/src/handlers/EditManager.java</file>
+            <file>file:/C:/Users/vitor/OneDrive/Documentos/GitHub/Editor-de-texto/Editor-texto/src/gui/ExitWindowListener.java</file>
+            <file>file:/C:/Users/vitor/OneDrive/Documentos/GitHub/Editor-de-texto/Editor-texto/src/gui/WelcomeView.java</file>
+            <file>file:/C:/Users/vitor/OneDrive/Documentos/GitHub/Editor-de-texto/Editor-texto/src/server/OurThreadClassTest.java</file>
+            <file>file:/C:/Users/vitor/OneDrive/Documentos/GitHub/Editor-de-texto/Editor-texto/src/gui/GUITest.java</file>
+            <file>file:/C:/Users/vitor/OneDrive/Documentos/GitHub/Editor-de-texto/Editor-texto/src/client/ClientTest.java</file>
+            <file>file:/C:/Users/vitor/OneDrive/Documentos/GitHub/Editor-de-texto/Editor-texto/src/client/ClientActionListener.java</file>
+            <file>file:/C:/Users/vitor/OneDrive/Documentos/GitHub/Editor-de-texto/Editor-texto/src/server/OurThreadClass.java</file>
+            <file>file:/C:/Users/vitor/OneDrive/Documentos/GitHub/Editor-de-texto/Editor-texto/src/server/Server_main.java</file>
+            <file>file:/C:/Users/vitor/OneDrive/Documentos/GitHub/Editor-de-texto/Editor-texto/src/gui/ConnectView.java</file>
+            <file>file:/C:/Users/vitor/OneDrive/Documentos/GitHub/Editor-de-texto/Editor-texto/src/handlers/MessageSwingWorker.java</file>
+            <file>file:/C:/Users/vitor/OneDrive/Documentos/GitHub/Editor-de-texto/Editor-texto/src/debug/Debug.java</file>
+            <file>file:/C:/Users/vitor/OneDrive/Documentos/GitHub/Editor-de-texto/Editor-texto/src/server/ServerTest.java</file>
+            <file>file:/C:/Users/vitor/OneDrive/Documentos/GitHub/Editor-de-texto/Editor-texto/src/client/Client_main.java</file>
+        </group>
     </open-files>
 </project-private>

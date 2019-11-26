@@ -11,11 +11,10 @@ import client.Client;
 import debug.Debug;
 
 /**
- * The MainWindow of the GUI that is a subclass of JFrame. It is the top-level
- * container for the the connect page, the document page, the welcome page, and
- * the openDocument page
+ * A MainWindow da GUI que é uma subclasse de JFrame. É o contêiner de nível 
+ * superior para a página de conexão, a página do documento, a página de 
+ * boas-vindas e a página openDocument
  * 
- * @author computerjunky28
  * 
  */
 @SuppressWarnings("unused")
@@ -32,10 +31,10 @@ public class MainWindow extends JFrame {
 	private String username;
 
 	/**
-	 * Creates a mainWindow, with the first screen being the connectView
+	 * Cria uma janela principal, com a primeira tela sendo o connectView
 	 */
 	public MainWindow() {
-		setTitle("Collaborative Text Editor");
+		setTitle("Editor de Texto - T3");
 		setLayout(new BorderLayout());
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setPreferredSize(new Dimension(250, 200));
@@ -44,10 +43,10 @@ public class MainWindow extends JFrame {
 		pack();
 	}
 
-	// mainWindow should get client from connectView after it connects
+	// O mainWindow deve obter o cliente do connectView depois que ele se conectar
 
 	/**
-	 * Switched from the connectView to the WelcomeView
+	 * Mudar do connectView para o WelcomeView
 	 */
 	public void switchToWelcomeView() {
 		setVisible(false);
@@ -60,19 +59,19 @@ public class MainWindow extends JFrame {
 		add(welcomeView, BorderLayout.CENTER);
 
 		if (DEBUG) {
-			System.out.println("Hi. switching to welcome view");
+			System.out.println("Mudando para a WelcomeView");
 		}
 		setVisible(true);
 	}
 
 	/**
-	 * Shows the dialog that prompts the user for an input name and sends the
-	 * input to the server.
+	 * Mostra a caixa de diálogo que solicita ao usuário um nome de entrada 
+         * e envia a entrada ao servidor.
 	 */
 	public void openUsernameDialog() {
-		String username = JOptionPane.showInputDialog("Enter a username", "");
+		String username = JOptionPane.showInputDialog("Digite um nome de Usuario", "");
 		if(username==null){
-			JOptionPane.showMessageDialog(null, "Please enter a valid username", "Error",
+			JOptionPane.showMessageDialog(null, "Por favor, digite um nome valido", "Error",
 					JOptionPane.ERROR_MESSAGE);
 		}
 		else{
@@ -89,7 +88,7 @@ public class MainWindow extends JFrame {
 	}
 
 	/**
-	 * Switch to DocumentView from WelcomeView
+	 * Mudar para o DocumentView a partir do WelcomeView
 	 */
 	public void switchToDocumentView(String documentName, String documentText) {
 		setVisible(false);
@@ -104,12 +103,12 @@ public class MainWindow extends JFrame {
 		getContentPane().repaint();
 		setVisible(true);
 		if (DEBUG) {
-			System.out.println("switching to document view");
+			System.out.println("alternando para a visualização do documento");
 		}
 	}
 
 	/**
-	 * Removes all views from the contentPane
+	 * Remove todas as visualizações do contentPane
 	 */
 	private void removeAllViews() {
 		if (welcomeView != null) {
@@ -124,36 +123,35 @@ public class MainWindow extends JFrame {
 	}
 
 	/**
-	 * Opens an openDocumentDialog that displays existing documents on the
-	 * server.
+	 * Abre um openDocumentDialog que exibe documentos existentes no servidor.
 	 * 
 	 * @param documentNames
-	 *            list of names of the documents
+	 *            lista de nomes dos documentos
 	 */
 	public void displayOpenDocuments(ArrayList<String> documentNames) {
 		if (DEBUG) {
-			System.out.println("switching to open existing document view");
+			System.out.println("alternando para abrir a exibição de documento existente");
 		}
 		openDocumentDialog = new OpenDocumentDialog(documentNames, client);
 	}
 
 	/**
-	 * Sends a command to the documentView to update the text of the document
-	 * with the new document text.
+	 * Envia um comando para o documentView para atualizar o texto do 
+         * documento com o novo texto do documento.
 	 * 
 	 * @param documentText
-	 *            text of the document
+	 *            texto do documento
 	 * @param editPosition
-	 *            the position of the edit
+	 *            a posição da edição
 	 * @param editLength
-	 *            the length of the text inserted or removed
+	 *            o comprimento do texto inserido ou removido
 	 * @param version
-	 *            the version of the document the edit was made on
+	 *            a versão do documento em que a edição foi feita
 	 */
 	public void updateDocument(String documentText, int editPosition,
 			int editLength, String username, int version) {
 		if (DEBUG) {
-			System.out.println("updating document");
+			System.out.println("atualizando documento");
 		}
 		if (documentView != null) {
 			documentView.updateDocument(documentText, editPosition, editLength,
@@ -164,22 +162,22 @@ public class MainWindow extends JFrame {
 	}
 
 	/**
-	 * Creates and shows a message dialog
+	 * Cria e mostra uma caixa de diálogo de mensagem
 	 * 
 	 * @param error
-	 *            the error message
+	 *            mensagem de erro
 	 */
 	public void openVersionErrorView(String error) {
 		int n = JOptionPane.showConfirmDialog(null, error, "Error",
 				JOptionPane.ERROR_MESSAGE);
 		client.sendMessageToServer("open " + client.getDocumentName());
 		if (DEBUG) {
-			System.out.println("sent message");
+			System.out.println("Envia mensagem");
 		}
 	}
 
 	/**
-	 * Creates and shows a message dialog with the specified error message.
+	 * Cria e mostra uma caixa de diálogo com a mensagem de erro especificada.
 	 * 
 	 * @param error
 	 */
@@ -189,7 +187,7 @@ public class MainWindow extends JFrame {
 	}
 
 	/**
-	 * Sets the client of the MainWindow
+	 * Define o cliente do MainWindow
 	 * 
 	 * @param client
 	 */
@@ -198,7 +196,7 @@ public class MainWindow extends JFrame {
 	}
 
 	/**
-	 * Returns the client of this frame
+	 * Retorna o cliente desse quadro
 	 */
 	public Client getClient() {
 		return client;

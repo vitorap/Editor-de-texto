@@ -1,12 +1,13 @@
 package debug;
 
 /**
- * Class that controls the verbosity of the program.
- * @author computerjunky28
+ * Classe que controla a verbosidade do programa.
+ * se debug for true, o terminal vai falar coisas que nos ajudam a debugar conforme
+ * o programa é executado
  *
  */
 public class Debug {
 	public static final boolean DEBUG = false;
-	public static final boolean VERBOSE = false; //general print statements 
-	//ie server started, client connected, etc.
+	public static final boolean VERBOSE = false; 
+
 }

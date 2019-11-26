@@ -7,8 +7,7 @@ import client.Client;
 import debug.Debug;
 
 /**
- * Class representing a window listener on the gui.
- * @author computerjunky28
+ *Classe que representa um ouvinte de janela na GUI.
  *
  */
 public class ExitWindowListener implements WindowListener {
@@ -27,12 +26,12 @@ public class ExitWindowListener implements WindowListener {
 
 
 	/**
-	 * Send a "bye" message to the server while closing the window.
+	 * Envie uma mensagem de "bye" para o servidor enquanto fecha a janela.
 	 */
 	@Override
 	public void windowClosing(WindowEvent paramWindowEvent) {
 		if(VERBOSE){
-		System.out.println("sending bye");
+		System.out.println("mandando tchau");
 		}
 		if(client != null && !client.getSocket().isClosed()){
 		client.sendMessageToServer("bye");

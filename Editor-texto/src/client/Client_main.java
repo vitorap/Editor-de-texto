@@ -4,7 +4,7 @@ import gui.MainWindow;
 import javax.swing.SwingUtilities;
 
 /**
- * The entry point of the Client side of the Collaborative Editor program.
+ * O ponto de entrada do lado do cliente do nosso Editor de Texto Colaborativo.
  *
  */
 public class Client_main {

@@ -5,21 +5,20 @@ import java.net.URLDecoder;
 import java.net.URLEncoder;
 
 /**
- * Class that contains the methods for the encoding and decoding of text to be
- * sent over the network.
- * 
- * @author computerjunky28
+ *Classe que contém os métodos para codificação e decodificação de texto a serem
+  * enviadso pela rede.
+  *
  * 
  */
 public class Encoding {
 
 	/**
-	 * Encodes text using URLEncoder according to the UTF-8 encoding
-	 * scheme
+	 *Codifica texto usando o URLEncoder de acordo com o esquema de
+         * codificação UTF-8
 	 * 
 	 * @param text
-	 *            the text going to be encoded
-	 * @return the after-encoding text
+	 *            o texto que vai ser codificado
+	 * @return o texto apos ser codificado
 	 */
 	public static String encode(String text) {
 		String result = "";
@@ -35,11 +34,11 @@ public class Encoding {
 	}
 
 	/**
-	 * Decodes text using URLDecoder according to the UTF-8 encoding
-	 * scheme
+	 * Decodifica o texto usando URLDecoder de acordo com o esquema 
+         * de codificação UTF-8
 	 * 
 	 * @param text
-	 *            the text to be decoded
+	 *            texto que vai ser decodificado
 	 */
 	public static String decode(String text) {
 		String result = "";

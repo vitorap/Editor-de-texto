@@ -9,8 +9,7 @@ import java.util.Map;
 import debug.Debug;
 
 /**
- * Class that manages the edit queue for the documents on the server
- * @author computerjunky28
+ * Classe que gerencia a fila de edição dos documentos no servidor
  *
  */
 public class EditManager {
@@ -18,8 +17,8 @@ public class EditManager {
 	private static final boolean DEBUG = Debug.DEBUG;
 	
 	/**
-	 * Creates a new EditManager for the server with a new map
-	 * of documentNames to lists of Edits
+	 * Cria um novo EditManager para o servidor com um novo mapa de 
+         * documentNames para listas de Edits
 	 * @param documentName
 	 */
 	public EditManager(){
@@ -28,9 +27,9 @@ public class EditManager {
 	}
 	
 	/**
-	 * Creates a new log for the new document - called when a new
-	 * document is created
-	 * @param documentName name of new document
+	 *Cria um novo log para o novo documento
+         * chamado quando um novo documento é criado
+	 * @param documentName nome do novo documento
 	 * 
 	 */
 	public synchronized void createNewlog(String documentName){
@@ -38,9 +37,9 @@ public class EditManager {
 	}
 	
 	/**
-	 * Adds the edit to the list for the document.
-	 * Document names are taken from the edit
-	 * @param edit the edit made
+	 *Adiciona a edição à lista do documento. 
+         * Os nomes dos documentos são retirados da edição
+	 * @param edit a edicao feita
 	 */
 	public synchronized void logEdit(Edit edit){
 		String documentName = edit.getDocumentName();
@@ -49,16 +48,13 @@ public class EditManager {
 	}
 
 	/**
-	 * Goes through the versionEditLog and attempts to add the edit at the
-	 * correct index by using operational transform. 
-	 * This is called when the client updates an out of date version
-	 * of the document. 
-	 * It goes through each edit that has been made with a version that is equal to or greater than
-	 * the specified version and finds the correct index.
-	 * @param documentName name of document
-	 * @param version version the edit was made one
-	 * @param offset the place the edit was first inserted
-	 * @return the corrected offset
+	 * Percorre o versionEditLog e tenta adicionar a edição no índice correto.
+         *é chamado quando o cliente atualiza uma versão desatualizada do documento.
+         *passa por cada edição feita com uma versão igual ou superior à versão especificada e encontra o índice correto.
+	 * @param documentName nome do documento
+	 * @param version versao que a edicao foi feita
+	 * @param offset o local em que a edição foi inserida
+	 * @return o offset correto
 	 */
 	public synchronized String manageEdit(String documentName, int version,
 			int offset) {
@@ -71,21 +67,20 @@ public class EditManager {
 				version = edit.getVersion();
 			}
 		}
-		if (DEBUG){System.out.println("new offset: "+offset);}
-		if (DEBUG){System.out.println("new version: "+version);}
+		if (DEBUG){System.out.println("novo offset: "+offset);}
+		if (DEBUG){System.out.println("nova versao: "+version);}
 		String result = documentName+" "+(version+1)+" "+offset;
 		return result;
 	}
 	
 
 	/**
-	 * Takes in the current offset and compares it to the otherOffset, the
-	 * offset of the already completed edit and it's length,
-	 * and corrects the currentOffset if necessary.
-	 * @param currentOffset   the current position of the offset
-	 * @param otherOffset     another position of the offset
-	 * @param length          the length of an already completed edit
-	 * @return corrected offset  the final corrected position of the offset
+	 * Pega o deslocamento atual e o compara com o otherOffset, o 
+         * deslocamento da edição já concluída e seu comprimento, e corrige o 
+         * currentOffset, se necessário.
+	 * @param currentOffset    a posicao atual do offset
+	 * @param otherOffset     outra posicao do offset
+	 * @param length          o tamanho do edit completo
 	 */
 	private int manageOffset(int currentOffset, int otherOffset, int length) {
 		if (currentOffset < otherOffset) {

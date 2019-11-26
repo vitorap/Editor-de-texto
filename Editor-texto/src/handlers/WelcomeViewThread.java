@@ -4,8 +4,8 @@ import client.Client;
 import debug.Debug;
 
 /**
- * The WelcomeViewThread makes a new Thread object that sends the input
- * from the WelcomeView to the server.
+ * O WelcomeViewThread cria um novo objeto Thread que envia a entrada do
+ * WelcomeView para o servidor.
  */
 public class WelcomeViewThread extends Thread {
 	private static final boolean DEBUG = Debug.DEBUG;
@@ -15,8 +15,8 @@ public class WelcomeViewThread extends Thread {
 	
     /**
      * 
-     * @param client the client that is taking the action
-     * @param message the message that client wants to send to the server
+     * @param client o cliente que está executando a ação
+     * @param message a mensagem que o cliente deseja enviar para o servidor
      */
 	public WelcomeViewThread(Client client, String message) {
 
@@ -24,10 +24,10 @@ public class WelcomeViewThread extends Thread {
 		this.client = client;
 	}
     /**
-     * Sends the message from the WelcomeView to the server.
+     * Envia a mensagem do WelcomeView para o servidor.
      */
 	public void run() {
-		if (DEBUG) {System.out.println("sending message");}
+		if (DEBUG) {System.out.println("mandando mensagem");}
 		client.sendMessageToServer(message);
 	}
 

@@ -17,14 +17,12 @@ import client.Client;
 
 @SuppressWarnings("all")
 /**
- * Interface that prompts clients for the server address
- * and starts the connection
- * rep invariant: host and port can not be null. 
+ * Interface que solicita aos clientes o endereço do servidor e inicia a conexão
+ * Host e porta não podem ser nulos.
  */
 public class ConnectView extends JPanel implements ActionListener {
 
 	private final MainWindow frame;
-	// can be null
 	private final JLabel serverAddressLabel;
 	private final JLabel hostLabel;
 	private final JTextField host;
@@ -35,25 +33,22 @@ public class ConnectView extends JPanel implements ActionListener {
 	private boolean DEBUG;
 
 	/**
-	 * Creates the ConnectView frame which has 3 JLabels: serverAddress,
-	 * portLabel and hostLabel; 2 JTextfields host and port for the user to
-	 * enter the host and port information; 1 button "connect" to connect and
-	 * switch to WelcomeView. The client of the ConnectView is the same client
-	 * as the frame being passed in.
+	 * * Cria a janela ConnectView que possui:
+         * 3 JLabels: serverAddress, portLabel e hostLabel; 
+         * 2 JTextfields: host e porta  para que o usuário insira as informações 
+         * 1 botão "conectar" para conectar e alternar para o WelcomeView. 
 	 * 
-	 * @param frame
-	 *            the MainWindow that calls the ConnectView.
 	 */
 	public ConnectView(MainWindow frame) {
 		this.frame = frame;
-		serverAddressLabel = new JLabel("Enter the server address:");
-		hostLabel = new JLabel("Host:");
+		serverAddressLabel = new JLabel("Digite o endereco do servidor:");
+		hostLabel = new JLabel("IP:");
 		host = new JTextField();
 		host.addActionListener(this);
-		portLabel = new JLabel("Port:");
+		portLabel = new JLabel("Porta:");
 		port = new JTextField();
 		port.addActionListener(this);
-		connectButton = new JButton("Connect");
+		connectButton = new JButton("Conectar");
 		connectButton.addActionListener(this);
 		this.client = frame.getClient();
 
@@ -96,13 +91,14 @@ public class ConnectView extends JPanel implements ActionListener {
 	}
 
 	/**
-	 * When enter or connect button is pressed, check for valid inputs. If
-	 * inputs are valid, ConnectViewThread is started to handle the switching to
-	 * WindowView. If invalid input is detected, a error window "invalid input"
-	 * pops up and the host and port fields are cleared.
+	Quando o botão enter ou connect for pressionado, verifique se há entradas 
+        * válidas. Se as entradas forem válidas, o ConnectViewThread será 
+        * iniciado para lidar com a mudança para o WindowView. 
+        * Se uma entrada inválida for detectada, uma janela de erro 
+        * "entrada inválida" será exibida e os campos host e porta serão limpos.
 	 * 
 	 * @param e
-	 *            the event that connect button or enter is pressed
+	 *            evento sobre o botao conectar ou enter pressionado
 	 */
 	public void actionPerformed(ActionEvent e) {
 		String hostInput = host.getText().trim();
@@ -114,33 +110,32 @@ public class ConnectView extends JPanel implements ActionListener {
 						frame);
 				frame.setClient(client);
 			} catch (NumberFormatException e1) {
-				JOptionPane.showMessageDialog(null, "Invalid arguments",
+				JOptionPane.showMessageDialog(null, "Argumentos Invalidos",
 						"Error", JOptionPane.ERROR_MESSAGE);
 
 			}
 			client.setMainWindow(frame);
 			if (DEBUG) {
 				System.out
-						.println("I am here, the client setMainWindow. ConnectView");
+						.println("Estou aqui, e agora irei setar a nova janela principal atraves de setMainWindow. ConnectView");
 			}
-			// start a new ConnectViewThread thread that takes care of switching
-			// the connect view to the window view
-			// and also start the client so that client begins to listens for
-			// server updates.
+			// inicie um nova thread ConnectViewThread que cuide de 
+                        // alternar a exibição de conexão para a janela e também inicie 
+                        //o cliente para que o cliente comece a ouvir atualizações do servidor.
 			ConnectViewThread thread = new ConnectViewThread(this);
-			// start the thread
+			// comeca a thread
 			thread.start();
 
 		} else {
-			JOptionPane.showMessageDialog(null, "Invalid arguments", "Error",
+			JOptionPane.showMessageDialog(null, "Argumentos invalidos", "Error",
 					JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
 	/**
-	 * Returns the client field
+	 * Retorna o campo do Client
 	 * 
-	 * @return client the private field of ConnectView class, a single client
+	 * 
 	 */
 	public Client getClient() {
 		return client;

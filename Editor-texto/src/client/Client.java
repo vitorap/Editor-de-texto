@@ -10,8 +10,8 @@ import java.net.Socket;
 import debug.Debug;
 
 /**
- * Client class receives message from the server and send the message to be
- * processed by ClientActionListener.
+ * A classe client recebe a mensagem do servidor e envia a mensagem para ser 
+ * processada pelo ClientActionListener.
  */
 public class Client {
 
@@ -31,11 +31,11 @@ public class Client {
 	 * Constructor
 	 * 
 	 * @param port
-	 *            the port client is connected to
+	 *            a porta que o client esta conectado
 	 * @param host
-	 *            client is connected to
+	 *            ip que o client vai conectar
 	 * @param main
-	 *            the MainWindow frame that calls the client
+	 *           janela principal que chama o client
 	 */
 	public Client(int port, String host, MainWindow main) {
 		this.port = port;
@@ -45,8 +45,7 @@ public class Client {
 	}
 
 	/**
-	 * Start with a welcomeView and starts an action listener that listens for
-	 * server updates.
+	 *Começa com um welcomeView e inicia um ouvinte de açoes que escuta atualizações do servidor.
 	 * 
 	 * @throws IOException
 	 */
@@ -54,8 +53,7 @@ public class Client {
 		socket = new Socket(host, port);
 		//mainWindow.switchToWelcomeView();
 		mainWindow.openUsernameDialog();
-		// also, start listening for the server socket.
-		if (DEBUG){System.out.println("Client connected to the server. ");}
+		if (DEBUG){System.out.println("Client conectado ao server. ");}
 		actionListener = new ClientActionListener(this, socket);
 		actionListener.run();
 		out = new PrintWriter(socket.getOutputStream());
@@ -64,27 +62,27 @@ public class Client {
 	}
 
 	/**
-	 * Set the filed mainWindow to be the frame
+	 * Define o campo mainWindow como uma janela
 	 * 
 	 * @param frame
-	 *            a MainWindow
+	 *            
 	 */
 	public void setMainWindow(MainWindow frame) {
 		this.mainWindow = frame;
 	}
 
 	/**
-	 * Send the message to the server by doing out.println(message)
+	 * Envia a mensagem para o servidor executando out.println (message)
 	 * 
 	 * @param message
-	 *            to send to the server
+	 *            para enviar para o servidor
 	 * 
 	 */
 	public void sendMessageToServer(String message) {
-		if (DEBUG) {System.out.println("we got to Client Send message");}
+		if (DEBUG) {System.out.println("agora o client deve mandar uma msg");}
 		try {
 			out = new PrintWriter(socket.getOutputStream());
-			if (DEBUG) {System.out.println("socket is" + socket.getLocalPort());}
+			if (DEBUG) {System.out.println("socket eh" + socket.getLocalPort());}
 			out.write(message + "\n");
 			out.flush();
 		} catch (IOException e) {
@@ -93,19 +91,19 @@ public class Client {
 	}
 	
 	/**
-	 * Sets the userName of the Client to the specified name and 
-	 * opens the welcome view for the client
+	 * Define o nome de usuário do cliente como o nome especificado e abre 
+         * a visualização de boas-vindas do cliente
 	 * @param name
 	 */
 	public void setUsername(String name){
-		System.out.println("setting username");
+		System.out.println("Definindo nome de usuario");
 		userName = name;
 		mainWindow.setUsername(name);
 		mainWindow.switchToWelcomeView();
 	}
 	
 	/**
-	 * Returns the client's username
+	 * Retorna o nome de usuario do cliente
 	 * @return userName
 	 */
 	public String getUsername(){
@@ -114,14 +112,14 @@ public class Client {
 
 	/**
 	 * 
-	 * @return the private field nameOfDocument
+	 * @return o campo privado nameOfDocument
 	 */
 	public String getDocumentName() {
 		return nameOfDocument;
 	}
 
 	/**
-	 * @return the private field textOfDocument
+	 * @return o campo privado textOfDocument
 	 */
 	public String getText() {
 		return textOfDocument;
@@ -129,14 +127,14 @@ public class Client {
  
 	/**
 	 * 
-	 * @return the current version
+	 * @return a versao atual
 	 */
 	public int getVersion(){
 		 return versionOfDocument;
 	}
 	/**
 	 * 
-	 * @return socket, the private filed socket
+	 * @return socket\
 	 */
 	public Socket getSocket() {
 		return socket;
@@ -144,36 +142,36 @@ public class Client {
 
 	/**
 	 * 
-	 * @return the private field mainWindow
+	 * @return o campo privado mainWindow
 	 */
 	public MainWindow getMainWindow() {
 		return mainWindow;
 	}
 
-	//*********************Back-end processing methods:*****************************
+	//*********************Métodos de processo do back-end*****************************
 	/**
-	 * The mutator method that changes the nameOfDocument to be name. Called
-	 * when the client receives new/open message from the server
+	 *  O método mutator que altera o nameOfDocument a ser nomeado. 
+         * Chamado quando o cliente recebe ou abre uma mensagem do servidor
 	 * 
-	 * @param name the string that is the new name of the document
+	 * @param name essa string é o novo nome do documento
 	 */
 	public void updateDocumentName(String name) {
-		System.out.println("updating documentName");
+		System.out.println("Atualizando nome do documento");
 		nameOfDocument = name;
 	}
 
 	/**
-	 * The mutator method that changes the textOfDocument to be text. Called
-	 * when the client receives new/open/change message from the server.
-	 * @param text  the String that is the new text of the document.
+	 * O método mutator que altera o textOfDocument para ser texto. 
+         * Chamado quando o cliente recebe, abre ou altera uma mensagem do servidor.
+	 * @param text  a String que é o novo texto do documento
 	 */
 	public void updateText(String text) {
 		textOfDocument = text;
 	}
 
 	/**
-	 * The mutator method that changes the version number
-	 * @param newVersion the new version number of the document
+	 * O método mutador que altera o número da versão
+	 * @param newVersion o novo número da versão do documento
 	 */
 	public void updateVersion(int newVersion) {
 		versionOfDocument = newVersion;

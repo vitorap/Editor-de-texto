@@ -14,10 +14,11 @@ import debug.Debug;
 
 /**
  * 
- * The OurThreadClass takes care of making a new thread that handles one client
- * connection. While the thread is running, it could listens for the client
- * messages, handles the message, and send back the server message to the
- * client. For testing strategy, please see OurThreadClassTest.java.
+ * O OurThreadClass cuida da criação de um novo encadeamento que lida com uma 
+ * conexão de cliente. Enquanto o encadeamento estiver em execução, ele poderá 
+ * escutar as mensagens do cliente, manipular a mensagem e enviar de volta a
+ * mensagem do servidor para o cliente. Para testar a estratégia, consulte 
+ * OurThreadClassTest.java.
  * 
  */
 public class OurThreadClass extends Thread {
@@ -28,24 +29,24 @@ public class OurThreadClass extends Thread {
 	private String username;
 	private final Server server;
 	private final String regex = "(bye)|(new [\\w\\d]+)|(look)|(open [\\w\\d]+)|(change .+)|(name [\\w\\d]+)";
-	private final String error1 = "Error: Document already exists.";
-	private final String error2 = "Error: No such document.";
-	private final String error3 = "Error: No documents exist yet.";
-	private final String error4 = "Error: Insert at invalid position.";
-	private final String error5 = "Error: You must enter a name when creating a new document.";
-	private final String error6 = "Error: Invalid arguments";
-	private final String error7 = "Error: Username is not available";
+	private final String error1 = "Erro: o documento já existe.";
+	private final String error2 = "Erro: Esse documento não existe.";
+	private final String error3 = "Erro: ainda não existem documentos.";
+	private final String error4 = "Erro: inserido na posição inválida.";
+	private final String error5 = "Erro: você deve inserir um nome ao criar um novo documento.";
+	private final String error6 = "Erro: Argumentos invalidos";
+	private final String error7 = "Erro: Nome de usuário não está disponível";
 	private final boolean sleep = false; // for debugging 
 
 	/**
-	 * Constructor for the thread object
+	 * Construtor para o objeto da thread
 	 * 
 	 * @param socket
-	 *            the socket to connect with the server
+	 *           o socket para conectar-se ao servidor
 	 * @param server
-	 *            the server that the client is trying to communicate with
+         * * o servidor com o qual o cliente está tentando se comunicar
 	 * @param alive
-	 *            a boolean that represents whether the client has disconnected
+         * um booleano que representa se o cliente desconectou
 	 */
 	public OurThreadClass(Socket socket, Server server) {
 		this.socket = socket;
@@ -54,14 +55,12 @@ public class OurThreadClass extends Thread {
 	}
 
 	/**
-	 * Run the server, listening for client connections and handling them. Never
-	 * returns unless an exception is thrown.
+	* Executa o servidor, ouvindo as conexões do cliente e tratando-as.
+        * Nunca retorna, a menos que uma exceção seja lançada.
 	 * 
 	 * @throws IOException
-	 *             if the main server socket is broken (IOExceptions from
-	 *             individual clients do *not* terminate serve()).
+	 *            se o socket do servidor principal estiver quebrado
 	 */
-	// thread object need to have "run" method
 	public void run() {
 		try {
 			handleConnection(socket);
@@ -71,29 +70,10 @@ public class OurThreadClass extends Thread {
 
 	
 	/**
-	 * Handle a single client connection. Returns when client disconnects.
+	 * Manipula uma conexão de cliente único. Retorna quando o cliente se desconecta.
 	 * 
-	 * Server-to-Client Message Protocol 
-	 * message :== (Error|Alldocs |Newdocument | Opendocument | ChangeText| Name) 
-	 * Error :== Error: .+ 
-	 * Alldocs:== "alldocs " DocumentName 
-	 * Newdocument:=="new " DocumentName
-	 * Opendocument:=="open " DocumentName UserName Version DocumentText 
-	 * ChangeText:=="change " DocumentName UserName Version ChangePosition ChangeLength DocumentText 
-	 * Name:== name UserName
-	 * UserName :== Chars
-	 * Version :== Int+ 
-	 * ChangePosition :== Int+ 
-	 * ChangeLength:== -?Int+ 
-	 * DocumentName:==Chars 
-	 * DocumentText:==.+
-	 * Chars:== [\\w\\d] 
-	 * Int:==[0-9]
 	 * 
-	 * @param socket
-	 *            socket where the client is connected
-	 * @throws IOException
-	 *             if connection has an error or terminates unexpectedly
+	 *
 	 */
 	private void handleConnection(Socket socket) throws IOException {
 		BufferedReader in = new BufferedReader(new InputStreamReader(
@@ -104,7 +84,7 @@ public class OurThreadClass extends Thread {
 			for (String line = in.readLine(); line != null; line = in
 					.readLine()) {
 				String output = handleRequest(line);
-				// for debugging only:
+				//pra debug só
 				if (sleep) {
 					try {
 						Thread.sleep(1000);
@@ -112,7 +92,7 @@ public class OurThreadClass extends Thread {
 						e.printStackTrace();
 					}
 				}
-				// If it's the bye message, terminate the connection
+                                // se a msg for bye desliga
 				if (output != null && output.equals("bye")) {
 					out.close();
 					in.close();
@@ -120,14 +100,13 @@ public class OurThreadClass extends Thread {
 
 				}
 
-				// if it's the ChangText message,return the message to all other
-				// alive clients
+				// se for a mensagem ChangText, retorne a mensagem
+                                //para todos os outros clientes conectados
 				else if (output != null && output.startsWith("change")) {
 					server.returnMessageToEveryOtherClient(output, this);
 				}
 
-				// Otherwise, only send the message to the client that sends
-				// this request.
+				
 				if (output != null) {
 					out.println(output);
 				}
@@ -169,17 +148,15 @@ public class OurThreadClass extends Thread {
 	public String handleRequest(String input) {
 		if (!alive) {
 			throw new RuntimeException(
-					"Should not get here since the client already disconnects.");
+					"Não devia chegar aqui, pois o cliente já desconectou.");
 		}
 		String returnMessage = "";
 		input = input.trim();
 		String[] tokens = input.split(" ");
 		if (DEBUG) {
-			System.out.println("Input message from the client is " + input);
+			System.out.println("A mensagem de entrada do cliente é " + input);
 		}
 		if (!input.matches(regex)) {
-			// for invalid input
-			// empty documentName
 			if (tokens.length == 1 && tokens[0].equals("new")) {
 				return error5;
 			} else {
@@ -192,10 +169,9 @@ public class OurThreadClass extends Thread {
 				returnMessage = "bye";
 
 			} else if (tokens[0].equals("new")) {
-				// 'new' request, make a new document if the name is valid. else, return a error message.
 				String documentName = tokens[1];
 				if (DEBUG) {
-					System.out.println("creating new document");
+					System.out.println("criando novo documento");
 				}
 				if (server.getDocumentMap().containsKey(documentName)) {
 					returnMessage = error1;
@@ -215,9 +191,8 @@ public class OurThreadClass extends Thread {
 				}
 
 			} else if (tokens[0].equals("look")) {
-				// 'look' request, 
-				// if server does not have any documents, return error message
-				// else, return a string of names separated by a space
+				// se o servidor não tiver nenhum documento, retorna mensagem de erro
+				// senao retorne uma sequência de nomes separados por um espaço
 				String result = "alldocs";
 				if (server.documentMapisEmpty()) {
 					returnMessage = error3;
@@ -227,7 +202,7 @@ public class OurThreadClass extends Thread {
 				}
 
 			} else if (tokens[0].equals("open")) {
-				// 'open' request, must open a document if it exists on server
+				// 'open', deve abrir um documento se ele existir no servidor
 				String documentName = tokens[1];
 				if (!server.getDocumentMap().containsKey(documentName)
 						|| !server.getDocumentVersionMap().containsKey(
@@ -242,7 +217,7 @@ public class OurThreadClass extends Thread {
 				}
 
 			} else if (tokens[0].equals("change")) {
-				// 'change' request, must change the string stored on the server if applicable
+				// 'change' altera a string salva no servidor
 				int version = Integer.parseInt(tokens[3]);
 				int offset, changeLength;
 				Edit edit;
@@ -255,14 +230,12 @@ public class OurThreadClass extends Thread {
 					returnMessage = error2;
 				} else {
 					Object lock = new Object();
-					// only one thread should be in below because as we change the
-					// version number, there might be race condition.
-					// I.e., a thread check the version number is correct, but in
-					// face that number is changed later on by another thread.
+					// Apenas um segmento deve estar abaixo, porque, conforme alteramos o número da versão,
+                                        ///pode haver uma condição de corrida.
+                                        //Ou seja, uma thread verifica se o número da versão está correto, esse numero é
+                                        //alterado posteriormente por outra thread.
 					synchronized (lock) {
 						if (server.getVersion(documentName) != version) {
-							// the client's document version is out of date
-							//update the index relative to the previous inserts so that the change can be inserted
 							if(editType.equals("insert")){
 								offset = Integer.parseInt(tokens[6]);
 							}
@@ -272,18 +245,15 @@ public class OurThreadClass extends Thread {
 							version = Integer.parseInt(updatedTokens[1]);
 							offset = Integer.parseInt(updatedTokens[2]);
 						} 
-						// then, the server could apply the (transformed) edit on document and return messages.
 						int length = server.getDocumentLength(documentName);
 						if (editType.equals("remove")) {
 							offset = Integer.parseInt(tokens[5]);
 							int endPosition = Integer.parseInt(tokens[6]);
-							// The server changes the document text:
 							server.delete(documentName, offset, endPosition);
 							changeLength = offset - endPosition; // negative
 							edit = new Edit(documentName, Type.REMOVE, "",
 									version, offset, changeLength);
 							server.logEdit(edit);
-							// server updates version number:
 							server.updateVersion(documentName, version + 1);
 							returnMessage = createMessage(documentName, username,
 									version + 1, offset, changeLength,
@@ -296,13 +266,11 @@ public class OurThreadClass extends Thread {
 							if (offset > length) {
 								returnMessage = error4;
 							} else {
-								// the server updates the document text:
 								server.insert(documentName, offset, text);
 								changeLength = text.length();
 								edit = new Edit(documentName, type, text,
 										version, offset, changeLength);
 								server.logEdit(edit);
-								// the server updated the document version
 								server.updateVersion(documentName, version + 1);
 								returnMessage = createMessage(documentName, username,
 										version + 1, offset, changeLength,
@@ -318,13 +286,8 @@ public class OurThreadClass extends Thread {
 	
 	
 	/**
-	 * Generate an return message from the arguments given according to the grammar. 
-	 * @param documentName  a string that is the name of the document
-	 * @param version       an integer that is the version of the document
-	 * @param offset        an integer that is the starting position of the change
-	 * @param changeLength  an integer that is the length of the text client changes
-	 * @param documentText  the string that is the entire text of the document.
-	 * @return
+	 * Gere uma mensagem de retorno a partir dos argumentos fornecidos
+	 * 
 	 */
 	private String createMessage(String documentName, String username, int version, int offset,
 			int changeLength, String documentText) {
@@ -335,15 +298,15 @@ public class OurThreadClass extends Thread {
 	
 	
 	/**
-	 * return the socket of the client
-	 * @return socket, the socket of the client
+	 * retornar o socket do cliente
+	 * @return socket, o socket do client
 	 */
 	public Socket getSocket() {
 		return socket;
 	}
 	
 	/**
-	 *return the userName of the client for this thread
+	 *retorne o userName do cliente para essa thread
 	 * @return userName
 	 */
 	public String getUsername() {
@@ -352,9 +315,8 @@ public class OurThreadClass extends Thread {
 
 	
 	/**
-	 * return private boolean field alive
-	 * @return alive, a boolean that represents if a client exits and
-	 *         disconnects.
+	 * @return alive, um booleano que nos diz se um client saiu e se desconectou
+         * 
 	 */
 	public boolean getAlive() {
 		return alive;

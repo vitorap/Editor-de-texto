@@ -32,7 +32,7 @@ import client.Client;
 import debug.Debug;
 
 /**
- * Class representing the interface of the editor
+ * Classe que representa a interface do editor
  */
 public class DocumentView extends JPanel {
 
@@ -51,16 +51,14 @@ public class DocumentView extends JPanel {
 	private final Client client;
 	private final String username;
 	private int currentVersion;
-	private boolean sent = false; //used in cursor managing
+	private boolean sent = false; 
         private UndoManager undoManager = new UndoManager();
         UndoAction undoAction = new UndoAction();
         private RedoAction redoAction = new RedoAction();
 	
-	// Rep invariant:
-	// documentText can be null
 
 	/**
-	 * Creates a new DocumentView; Used for debugging/testing purposes
+	 * Cria um novo DocumentView; Usado para depuração/teste
 	 */
 	public DocumentView(MainWindow frame) {
 		this.frame = frame;
@@ -71,15 +69,15 @@ public class DocumentView extends JPanel {
 	}
 
 	/**
-	 * Creates a new DocumentView with the MainWindow, documentName, and the
-	 * text of the document.
+	 * Cria um novo DocumentView com a MainWindow, documentName e o texto 
+         * do documento.
 	 * 
 	 * @param client
 	 * @param documentName
 	 */
 	public DocumentView(MainWindow frame, String documentName, String text) {
 		if (DEBUG) {
-			System.out.println("Is making a document View.");
+			System.out.println("Estou criando um documento :]");
 		}
 		this.frame = frame;
 		this.client = frame.getClient();
@@ -91,29 +89,29 @@ public class DocumentView extends JPanel {
 	}
 
 	/**
-	 * Initializes components, defines the layout, and adds the listeners
+	 * Inicializa componentes, define o layout e adiciona os ouvintes
 	 */
 	private void createLayout() {
 		
 		menu = new JMenuBar();
-		file = new JMenu("File");
-		edit = new JMenu("Edit");
+		file = new JMenu("Arquivo");
+		edit = new JMenu("Editar");
 		menu.add(file);
 		menu.add(edit);
 
-		newfile = new JMenuItem("New");
+		newfile = new JMenuItem("Novo");
 		newfile.addActionListener(new NewFileListener());
 		file.add(newfile);
 		
-		copy = new JMenuItem("Copy");
+		copy = new JMenuItem("Copiar");
 		copy.addActionListener(new CopyListener());
 		edit.add(copy);
 		
-		cut = new JMenuItem("Cut");
+		cut = new JMenuItem("Cortar");
 		cut.addActionListener(new CutListener());
 		edit.add(cut);
 		
-		paste = new JMenuItem("Paste");
+		paste = new JMenuItem("Colar");
 		paste.addActionListener(new PasteListener());
 		edit.add(paste);
 
@@ -121,11 +119,11 @@ public class DocumentView extends JPanel {
                 edit.add(undoAction);
                 edit.add(redoAction);
                 
-    		open = new JMenuItem("Open");
+    		open = new JMenuItem("Abrir");
 		open.addActionListener(new OpenFileListener());
 		file.add(open);
 
-		exit = new JMenuItem("Exit");
+		exit = new JMenuItem("Sair");
 		exit.addActionListener(new ExitFileListener());
 		file.add(exit);
 		frame.setJMenuBar(menu);
@@ -161,11 +159,11 @@ public class DocumentView extends JPanel {
 
 
 	/**
-	 * Class representing the DocumentListener for the document in the GUI.
+	 * Classe que representa o DocumentListener para o documento na GUI.
 	 */
 	private class TextDocumentListener implements DocumentListener {
 		/**
-		 * Sends an edit message to the server for an insertUpdate
+		 * Envia uma mensagem de edição ao servidor para um insertUpdate
 		 */
 		public void insertUpdate(DocumentEvent e) {
 			synchronized (area) {
@@ -194,7 +192,7 @@ public class DocumentView extends JPanel {
 		}
 		
 		/**
-		 * Sends an edit message to the server for a removeUpdate
+		 * Envia uma mensagem de edição ao servidor para um removeUpdate
 		 */
 		public void removeUpdate(DocumentEvent e) {
 			synchronized (area) {
@@ -217,24 +215,24 @@ public class DocumentView extends JPanel {
 		}
 	
 		public void changedUpdate(DocumentEvent e) {
-			// Plain text components do not fire these events
+			// Componentes de texto sem formatação não acionam esses eventos
 		}
 	}
 
 
 	
 	/**
-	 * Manages the cursor given the current cursor position,
-	 * the position the edit was made, and the length of the change
+	 * Gerencia o cursor, dada a posição atual do cursor, a posição em que
+         * a edição foi feita e a duração da alteração
 	 * @param currentPos
 	 * @param pivotPosition
 	 * @param amount
 	 */
 	private void manageCursor(int currentPos, int pivotPosition, int amount) {
 		if(DEBUG){
-			System.out.println("first position: "+caret.getDot());
+			System.out.println("primeira posicao: "+caret.getDot());
 			System.out.println("pivot: "+pivotPosition);
-			System.out.println("amount: "+amount);
+			System.out.println("quantidade: "+amount);
 		}
 
 		if (currentPos >= pivotPosition) {
@@ -248,17 +246,13 @@ public class DocumentView extends JPanel {
 			caret.setDot(currentPos);
 		}
 		if(DEBUG){
-			System.out.println("caret moved to: "+caret.getDot());
+			System.out.println("caret movido para: "+caret.getDot());
 		}
 	}
 
 	/**
-	 * Decodes and updates the document with the text from the server,
-	 * also manages the cursor using editPosition and editLength.
-	 * @param updatedText encoded text
-	 * @param editPosition the offset of the change message sent from the server
-	 * @param editLength the length of the change sent from the server
-	 * @param version the version of the edit
+	 * Decodifica e atualiza o documento com o texto do servidor, também 
+         * gerencia o cursor usando editPosition e editLength.
 	 */
 	public void updateDocument(String updatedText, int editPosition,
 			int editLength, String username, int version) {
@@ -285,16 +279,16 @@ public class DocumentView extends JPanel {
 		}
 	}
 	
-	/** Class representing a Listener on the New button in the JMenu */
+	/**Classe representando um Ouvinte no botão Novo no JMenu*/
 	private class NewFileListener implements ActionListener {
 		
-		/** Sends a "new" message to the server when a client creates a new document
-		 * with the document being the user input  
+		/** Envia uma mensagem "nova" para o servidor quando um cliente
+                 * cria um novo documento com o documento sendo a entrada do usuário 
 		 */
 		public void actionPerformed(ActionEvent e) {
 			String newDocumentName = JOptionPane.showInputDialog(
-					"Enter a new document name", "");
-			// If the client does not click on "cancel", it need to send the message to the server.
+					"Diga o nome do novo documento", "");
+			// Se o cliente não clicar em "cancelar", precisa enviar a mensagem para o servidor.
 			if (newDocumentName !=null){
 			    String message = "new " + newDocumentName;
             	MessageSwingWorker worker = new MessageSwingWorker(client,
@@ -304,29 +298,29 @@ public class DocumentView extends JPanel {
 		}
 	}
 
-	/** Class representing a Listener on the Open button in the JMenu */
+	/** Classe representando um Ouvinte no botão Abrir no JMenu */
 	private class OpenFileListener implements ActionListener {
 		/**
-		 * Sends a "look" message to the server, which will respond by showing a
-		 * dialog with the documents on the server.
+		 * Envia uma mensagem de "aparência" ao servidor, que responderá
+                 * mostrando uma caixa de diálogo com os documentos no servidor.
+                 * 
 		 */
 		public void actionPerformed(ActionEvent e) {
-			// send message to client, get documentNames
 			client.sendMessageToServer("look");
 		}
 	}
 
 	
-	/** Class representing a Listener on the Exit button in the JMenu */
+	/** Classe representando um Ouvinte no botão Sair no JMenu */
 	private class ExitFileListener implements ActionListener {
 		/**
-		 * Shows a JOptionPane asking the user to confirm an exit. If they
-		 * confirm, the gui will close and the client will be disconnected from
-		 * the server.
+		 * Mostra um JOptionPane pedindo ao usuário para confirmar uma saída.
+                 * Se ele confirmar, o gui será fechado e o cliente será 
+                 * desconectado do servidor.
 		 */
 		public void actionPerformed(ActionEvent e) {
 			int n = JOptionPane.showConfirmDialog(null,
-					"Are you sure you want to quit?", "Exit",
+					"Tem certeza que deseja sair?", "Sair",
 					JOptionPane.YES_NO_OPTION);
 			if (n == 0) {
 				if(!client.getSocket().isClosed()) {
@@ -336,27 +330,24 @@ public class DocumentView extends JPanel {
 			}
 		}
 	}
-	/** Class representing a listener on the Copy button in the JMenu*/
+	/** Classe que representa um ouvinte no botão Copiar no JMenu*/
 	private class CopyListener implements ActionListener {
 		
-		/** Copies the selected text from the text area. */
 		public void actionPerformed(ActionEvent e) {
 			area.copy();
 		}
 	}
-	/** Class representing a listener on the Paste button in the JMenu */
+	/** Classe representando um ouvinte no botão Colar no JMenu */
 	private class PasteListener implements ActionListener {
 		
-		/** Pastes the cut/copied text from the text area */
 		public void actionPerformed(ActionEvent e) {
 			area.paste();
 		}
 	}
 	
-	/** Class representing a listener on the Cut button in the JMenu */
+	/** Classe que representa um ouvinte no botão Recortar no JMenu */
 	private class CutListener implements ActionListener {
 		
-		/** Cuts the selected text from the text area*/
 		public void actionPerformed(ActionEvent e) {
 			area.cut();
 		}

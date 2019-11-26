@@ -16,8 +16,8 @@ import client.Client;
 
 
 /**
- * WelcomeView represents the welcome screen presented to clients after
- * connecting to the server
+ * WelcomeView representa a tela de boas-vindas apresentada aos clientes após
+ * a conexão com o servidor
  */
 @SuppressWarnings("all")
 public class WelcomeView extends JPanel implements ActionListener {
@@ -29,7 +29,7 @@ public class WelcomeView extends JPanel implements ActionListener {
 	private Client client;
 
 	/**
-	 * Creates a new WelcomeView with the top-level frame and the Client
+	 * Cria um novo WelcomeView com o quadro de nível superior e o Cliente
 	 * 
 	 * @param frame
 	 * @param client
@@ -37,15 +37,15 @@ public class WelcomeView extends JPanel implements ActionListener {
 	public WelcomeView(MainWindow frame, Client client) {
 		this.frame = frame;
 		this.client = client;
-		welcomeLabel = new JLabel("Welcome to the Collaborative Text Editor.");
-		System.out.println("I am currently making a welcome view.");
-		createNewLabel = new JLabel("Enter a new document name:");
+		welcomeLabel = new JLabel("Seja bemvindo. Sou um editor de texto colaborativo.");
+		System.out.println("Atualmente, estou fazendo uma visualização bem-vinda.");
+		createNewLabel = new JLabel("Digite o nome do novo documento:");
 		documentName = new JTextField();
 		documentName.addActionListener(this);
-		createNewButton = new JButton("Create");
+		createNewButton = new JButton("Criar");
 		createNewButton.addActionListener(this);
 		
-		openDocumentButton = new JButton("Open Existing Document");
+		openDocumentButton = new JButton("Abrir documento existente");
 		openDocumentButton.addActionListener(this);
 
 		GroupLayout layout = new GroupLayout(this);
@@ -71,9 +71,9 @@ public class WelcomeView extends JPanel implements ActionListener {
 	}
 
 	/**
-	 * Listener for the documentName field. Checks to make sure the documentName
-	 * is valid and then starts a new WelcomeView thread that sends a "new"
-	 * message to the server
+	 * Ouvinte para o campo documentName. Verifica se o documentName é 
+         * válido e, em seguida, inicia uma nova thread do WelcomeView que envia
+         * uma mensagem "new" ao servidor
 	 */
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == createNewButton || e.getSource() == documentName) {
@@ -83,8 +83,8 @@ public class WelcomeView extends JPanel implements ActionListener {
 				thread.start();
 			} else {
 				JOptionPane.showMessageDialog(null,
-						"Document name cannot be empty and must only contain letters and digits.",
-						"Invalid document name", JOptionPane.ERROR_MESSAGE);
+						"O nome do documento não pode estar vazio e deve conter apenas letras e dígitos.",
+						"Nome de documento inválido", JOptionPane.ERROR_MESSAGE);
 			}
 		}
 		else if (e.getSource() == openDocumentButton){
@@ -93,9 +93,8 @@ public class WelcomeView extends JPanel implements ActionListener {
 	}
 
 	/**
-	 * Returns the client of the WelcomeView
+	 * Retorna o cliente do WelcomeView
 	 * 
-	 * @return client the private field client
 	 */
 	public Client getClient() {
 		return client;

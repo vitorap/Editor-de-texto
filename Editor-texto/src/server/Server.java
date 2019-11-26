@@ -14,16 +14,16 @@ import java.util.Map;
 import debug.Debug;
 
 /**
- * The Server listens for the message sent over the network from the client. It
- * updates its own state and sends the appropriate message back to either the
- * client that sent the message or all the alive clients, depending on what's
- * the input message.
- * 
- * private fields: documentMap: a map that maps the document name to its text.
- * We store all the document in the server. serverSocket: the socket of the
- * server threadList: a list of Threads, each is for one client connection
- * editManager：　represents a queue of edits
- */
+O servidor escuta a mensagem enviada pela rede a partir do cliente. 
+* Ele atualiza seu próprio estado e envia a mensagem apropriada de volta ao 
+* cliente que enviou a mensagem ou a todos os clientes ativos, dependendo da 
+* mensagem de entrada.
+*
+*  campos privados: documentMap: um mapa que mapeia o nome do documento para seu texto.
+*  Armazenamos todo o documento no servidor.
+*  serverSocket: o soquete do servidor
+*  threadList: uma lista de Threads, cada um é para uma conexão de cliente editManager: representa uma fila de edições
+*/
 
 public class Server {
 	private static final boolean DEBUG = Debug.DEBUG;
@@ -35,10 +35,10 @@ public class Server {
 	private final EditManager editManager;
 
 	/**
-	 * Make a Server that listens for connections on port.
+	 * Crie um servidor que escute as conexões na porta.
 	 * 
 	 * @param port
-	 *            port number,
+	 *            numero da porta
 	 * @requires 0 <= port <= 65535.
 	 * @throws IOException
 	 */
@@ -46,7 +46,7 @@ public class Server {
 			Map<String, Integer> version) {
 		try {
 			serverSocket = new ServerSocket(port);
-			System.out.println("Server created. Listening on port " + port);
+			System.out.println("Servidor criado. Ouvindo na porta " + port);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -58,21 +58,14 @@ public class Server {
 	}
 
 	/**
-	 * Run the server, listening for client connections and handling them. Never
-	 * returns unless an exception is thrown.
+	 * Executa o servidor, ouvindo as conexões do cliente e tratando-as. 
+         * Nunca retorna, a menos que uma exceção seja lançada.
 	 * 
-	 * @throws IOException
-	 *             if the main server socket is broken
 	 */
 	public void serve() {
 		while (true) {
 			try {
-				// block until a client connects
 				Socket socket = serverSocket.accept();
-				// handle the client by making a new OurThreadClass thread
-				// running for that client,
-				// also add that thread to the threadList so that the server
-				// could send the message to the client
 				OurThreadClass t = new OurThreadClass(socket, this);
 				threadList.add(t);
 				t.start();
@@ -82,15 +75,12 @@ public class Server {
 		}
 	}
 
-	/**
-	 * @return the documentMap, a private field of the server
-	 */
 	public synchronized Map<String, StringBuffer> getDocumentMap() {
 		return documentMap;
 
 	}
 	/**
-	 * Checks if a username is already in the usernameList.
+	 * Verifica se um nome de usuário já está na lista de nome de usuário.
 	 * @param name
 	 * @return
 	 */
@@ -103,7 +93,7 @@ public class Server {
 	}
 
 	/**
-	 * @return the documentVersionMap, a private field of the server
+	 * @return o documentVersionMap, um campo particular do servidor
 	 */
 	public synchronized Map<String, Integer> getDocumentVersionMap() {
 		return documentVersionMap;
@@ -112,8 +102,8 @@ public class Server {
 
 	/**
 	 * 
-	 * @return all of the document names on the server in a single string
-	 *         separated by a space. Ex: " document1 document2"
+	 * @return todos os nomes de documentos no servidor em uma única string
+         * por um espaço. Ex: "doc1 doc2"
 	 */
 	public synchronized String getAllDocuments() {
 		String documentNames = "";
@@ -124,66 +114,52 @@ public class Server {
 	}
 
 	/**
-	 * Manage the edit made by a client
+	 * Gerencia a edição feita por um cliente
 	 * 
 	 * @param documentName
-	 *            the name of document edited
+	 *            O Nome do documento editado
 	 * @param version
-	 *            the version number of the document sent by the client
-	 * @param offset
-	 *            the position of the edit
-	 * @return a string that is transformed message with version and offset
-	 *         corrected to match the current document on server
+	 * o número da versão do documento enviado pelo cliente
 	 */
 	public synchronized String manageEdit(String documentName, int version,
 			int offset) {
 		return editManager.manageEdit(documentName, version, offset);
 	}
 
-	/**
-	 * @return boolean true if documentMap is empty, false otherwise
-	 */
 	public synchronized boolean documentMapisEmpty() {
 		return documentMap.isEmpty();
 	}
 
-	/**
-	 * @return boolean true if documentVersionMap is empty, false otherwise
-	 */
+	
 	public synchronized boolean versionMapisEmpty() {
 		return documentVersionMap.isEmpty();
 	}
 
-	/**
-	 * Add the edit to the queue
-	 * 
-	 * @param edit
-	 *            the edit made
-	 */
+	
 	public synchronized void logEdit(Edit edit) {
 		editManager.logEdit(edit);
 	}
 
 	/**
-	 * Removes a thread from the threadList
+	 * Remove um thread da lista de threads
 	 * 
 	 * @param t
-	 *            the thread going to be removed
+	 *            a thread que vai ser removida
 	 */
 	public synchronized void removeThread(OurThreadClass t) {
 		if (DEBUG) {
-			System.out.println("removing thread from threadlist");
+			System.out.println("removendo thread");
 		}
 		usernameList.remove(t.getUsername());
 		threadList.remove(t);
 	}
 
 	/**
-	 * Creates a new document and adds it to the documentMap and the
-	 * documentVersionMap with version 1.
+	 * Cria um novo documento e o adiciona ao documentMap e ao documentVersionMap
+         * com a versão  = 1.
 	 * 
 	 * @param documentName
-	 *            name of document
+	 *            nome do documento
 	 */
 	public synchronized void addNewDocument(String documentName) {
 		documentMap.put(documentName, new StringBuffer());
@@ -193,72 +169,67 @@ public class Server {
 	}
 
 	/**
-	 * Updates the version of the specified documentName in the
-	 * documentVersionMap. If documentName is not yet a key in
-	 * documentVersionMap, a new key-value pair is added to the map.
+	 * Atualiza a versão do documentName especificado no documentVersionMap. 
+         * Se documentName ainda não for uma chave no documentVersionMap, 
+         * um novo par de valores-chave será adicionado ao mapa.
 	 * 
 	 * @param documentName
-	 *            the name of the document
+	 *            o nome do documento
 	 * @param version
-	 *            the new version number
+	 *           o novo número da versão
 	 */
 	public synchronized void updateVersion(String documentName, int version) {
 		documentVersionMap.put(documentName, version);
 	}
 
 	/**
-	 * Returns the current version of the specified document
+	 *Retorna a versão atual do documento especificado
 	 * 
-	 * @param documentName
-	 *            the name of document that we want to get version number for
-	 * @return the integer that is current version number corresponding to the
-	 *         documentName in document version map
 	 */
 	public synchronized int getVersion(String documentName) {
 		return documentVersionMap.get(documentName);
 	}
 
 	/**
-	 * Deletes text in the specified document from the specified offset to the
-	 * specified endPosition If starting position is smaller than 0 or the end
-	 * position is smaller than 1, throw a run time exception
+	 *Exclui o texto no documento especificado do deslocamento especificado 
+         * para a posição final especificada. Se a posição inicial for menor que
+         * 0 ou se a posição final for menor que 1, lance uma exceção de
+         * tempo de execução
 	 * 
 	 * @param documentName
-	 *            the name of the document
+	 *            o nome do documento
 	 * @param offset
-	 *            the starting position of the text going to be deleted
+         * a posição inicial do texto  que será excluída
 	 * @param endPosition
-	 *            the end position of the text going to be deleted
+	 *            a posicao final do texto que sera excluido
 	 */
 	public synchronized void delete(String documentName, int offset,
 			int endPosition) {
 		if (offset < 0 || endPosition < 1) {
-			throw new RuntimeException("invalid args");
+			throw new RuntimeException("argumentos invalidos");
 		}
 		documentMap.get(documentName).delete(offset, endPosition);
 	}
 
 	/**
-	 * Inserts the text into the specified document at the specified offset
+	 * Insere o texto no documento especificado no deslocamento especificado
 	 * 
 	 * @param documentName
-	 *            the name of the document
+	 *            o nome do documento
 	 * @param offset
-	 *            the starting position that the text is going to be inserted
-	 *            into
+	 *            onde o texto vai ser inserido, posicao inicial
 	 * @param text
-	 *            the text that we want to insert into
+	 *            o texto que queremos inserir
 	 */
 	public synchronized void insert(String documentName, int offset, String text) {
 		documentMap.get(documentName).insert(offset, text);
 	}
 
 	/**
-	 * Returns the string representing the document text
+	 * Retorna a string que representa o texto do documento
 	 * 
 	 * @param documentName
-	 *            the name of the document
-	 * @return document text the text of the document
+	 *            o nome do documento
 	 */
 	public synchronized String getDocumentText(String documentName) {
 		String document = "";
@@ -267,38 +238,28 @@ public class Server {
 	}
 
 	/**
-	 * Returns the length of the specified document
+	 *Retorna o tamanho do documento especificado
 	 * 
 	 * @param documentName
-	 *            the name of the document
-	 * @return length the length of the text of that document
+	 *            o nome do documento
 	 */
 	public synchronized int getDocumentLength(String documentName) {
 		return documentMap.get(documentName).length();
 	}
 
 	/**
-	 * Sends a message from every other thread in the threadList except for the
-	 * thread that originally sent the message (no duplicate messages) and
-	 * threads that has already closed its on and in (i.e, client disconnects).
-	 * 
-	 * @param message
-	 *            the String that the server is going to sent to clients
-	 * @param thread
-	 *            sending thread
+	 * Envia uma mensagem de todas threads no threadList, exceto a thread 
+         * que originalmente enviou a mensagem (sem mensagens duplicadas) e 
+         * as threads que já o fecharam (ou seja, quando o cliente desconectou).
 	 */
 	public void returnMessageToEveryOtherClient(String message,
 			OurThreadClass thread) {
 		for (OurThreadClass t : threadList) {
 			if (!thread.equals(t) && !t.getSocket().isClosed()) {
-				// if the thread is still alive and it's not the one that sends
-				// the request, send message
 				PrintWriter out;
 				if (t.getSocket().isConnected()) {
 					synchronized (t) {
 						try {
-							// for those threads, open a printWriter and write
-							// message to its socket.
 							out = new PrintWriter(t.getSocket()
 									.getOutputStream(), true);
 							out.println(message);

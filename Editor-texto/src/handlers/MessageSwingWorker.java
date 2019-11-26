@@ -6,9 +6,8 @@ import client.Client;
 
 
 /**
- * MessageSwingWorker represents a SwingWorker class that sends messages to the server
- * in a background thread. 
- * @author computerjunky28
+ * MessageSwingWorker representa uma classe SwingWorker que envia mensagens para 
+ * o servidor em uma thread em segundo plano.
  *
  */
 @SuppressWarnings("unused")
@@ -18,10 +17,10 @@ public class MessageSwingWorker extends SwingWorker<Void, Void>{
 	private boolean sent;
 	
 	/**
-	 * Constructs a new instance of a MessageSwingWorker with the client and the message
+	 * Constrói uma nova instância de um MessageSwingWorker com o client e a mensagem
 	 * @param client
 	 * @param message
-	 * @param sent - boolean representing the client has sent this message
+	 * @param sent - booleano que representa o cliente enviou esta mensagem
 	 */
 	public MessageSwingWorker(Client client, String message, boolean sent){
 		this.client = client;
@@ -30,7 +29,7 @@ public class MessageSwingWorker extends SwingWorker<Void, Void>{
 	}
 	
 	/**
-	 * Connects with the server in the background.
+	 * Conecta-se ao servidor em segundo plano.
 	 */
 	protected Void doInBackground() {
 		client.sendMessageToServer(message);
@@ -38,8 +37,7 @@ public class MessageSwingWorker extends SwingWorker<Void, Void>{
 		return null;
 	}
 	/**
-	 * Repaints the GUI after connecting with the server and the actions
-	 * have been completed.
+	 * Repita a GUI após a conexão com o servidor e as ações serem concluídas.
 	 */
 	@Override
 	protected void done() {

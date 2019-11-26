@@ -7,23 +7,23 @@ import java.util.Map;
 import debug.Debug;
 
 /**
- * The server_main class will start to run a server that listens a specific
- * number of port(4444).
+ * A classe server_main começará a executar um servidor que escuta uma porta especifica(1234).
  * 
  */
 public class Server_main {
 	private static final boolean DEBUG = Debug.DEBUG;
-	private static final int defaultPort = 4444;
+	private static final int defaultPort = 1234;
 
 	/**
-	 * Entry point for starting a Collaborative Editor Server.
-	 * Starts the server on the specified port or the default port(4444)
-	 * if no port is specified or if arguments don't follow the usage
-	 * 
-	 * Usage: Server_main -p PORT
-	 * PORT = desired port number for the server
-	 * 
-	 * @param args
+	 A classe server_main começará a executar um servidor que escuta uma porta especifica (1234).
+         * Ponto de entrada para iniciar um Collaborative Editor Server.
+        * Inicia o servidor na porta especificada ou na porta padrão (1234)
+        * se nenhuma porta for especificada ou se os argumentos não seguirem o uso
+        *
+        * Uso: Server_main -p PORT
+        * PORT = número da porta desejada para o servidor
+        *
+        *@param args
 	 */
 	public static void main(String[] args) {
 		int port;
@@ -41,18 +41,17 @@ public class Server_main {
 	}
 
 	/**
-	 * Start a Server running on the specified port. Its map field is
-	 * initialized as a empty map as no clients have established connection with
-	 * the server yet.
+	 * Inicia um servidor na porta especificada. 
+         * 
 	 * 
 	 * @param port
-	 *            The network port on which the server should listen, requires 0
+	 *           A porta de rede na qual o servidor deve escutar
 	 *            <= port <= 65535.
 	 */
 
 	public static void runServer(int port) throws IOException {
 		if (DEBUG) {
-			System.out.println("I am at runServer().");
+			System.out.println("Estou rodando o server.");
 		}
 		Map<String, StringBuffer> map = new HashMap<String, StringBuffer>();
 		Map<String, Integer> versions = new HashMap<String, Integer>();
