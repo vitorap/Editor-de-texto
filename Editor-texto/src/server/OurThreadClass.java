@@ -45,8 +45,6 @@ public class OurThreadClass extends Thread {
 	 *           o socket para conectar-se ao servidor
 	 * @param server
          * * o servidor com o qual o cliente está tentando se comunicar
-	 * @param alive
-         * um booleano que representa se o cliente desconectou
 	 */
 	public OurThreadClass(Socket socket, Server server) {
 		this.socket = socket;
@@ -58,8 +56,6 @@ public class OurThreadClass extends Thread {
 	* Executa o servidor, ouvindo as conexões do cliente e tratando-as.
         * Nunca retorna, a menos que uma exceção seja lançada.
 	 * 
-	 * @throws IOException
-	 *            se o socket do servidor principal estiver quebrado
 	 */
 	public void run() {
 		try {

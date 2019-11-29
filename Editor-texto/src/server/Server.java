@@ -39,8 +39,6 @@ public class Server {
 	 * 
 	 * @param port
 	 *            numero da porta
-	 * @requires 0 <= port <= 65535.
-	 * @throws IOException
 	 */
 	public Server(int port, Map<String, StringBuffer> documents,
 			Map<String, Integer> version) {

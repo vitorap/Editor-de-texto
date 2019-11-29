@@ -46,7 +46,6 @@ public class Server_main {
 	 * 
 	 * @param port
 	 *           A porta de rede na qual o servidor deve escutar
-	 *            <= port <= 65535.
 	 */
 
 	public static void runServer(int port) throws IOException {

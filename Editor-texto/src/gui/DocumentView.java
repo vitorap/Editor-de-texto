@@ -72,7 +72,6 @@ public class DocumentView extends JPanel {
 	 * Cria um novo DocumentView com a MainWindow, documentName e o texto 
          * do documento.
 	 * 
-	 * @param client
 	 * @param documentName
 	 */
 	public DocumentView(MainWindow frame, String documentName, String text) {
@@ -266,7 +265,6 @@ public class DocumentView extends JPanel {
 			manageCursor(pos, editPosition, editLength);
 			}
 			else if(this.username!=null && this.username.equals(username)) {
-				//check if version matches up
 				if(currentVersion<version-1){
 					area.getDocument().removeDocumentListener(documentListener);
 					area.setText(documentText);

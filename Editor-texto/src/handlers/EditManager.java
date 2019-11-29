@@ -19,7 +19,6 @@ public class EditManager {
 	/**
 	 * Cria um novo EditManager para o servidor com um novo mapa de 
          * documentNames para listas de Edits
-	 * @param documentName
 	 */
 	public EditManager(){
 		editLog = Collections.synchronizedMap(new HashMap<String, List<Edit>>());
